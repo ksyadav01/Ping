@@ -6,13 +6,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 //Screens
 
 import LandingScreen from './screens/LandingScreen'
+import LoginScreen from './screens/Login'
 
 const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName = "Landing">
-        <Stack.Screen name = "Landing" component={LandingScreen} options={{headerShown: false}}/>
+        <Stack.Screen name = "Landing" component={LoginScreen} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
