@@ -3,7 +3,7 @@ import {Text, View, Button} from 'react-native'
 
 export default function LandingScreen({navigation}) {
     return (
-       <View>
+       <View style={styles.wrapper}>
             <Button
             title = "Sign Up"
             onPress = {() => navigation.navigate("Register")}
@@ -16,3 +16,9 @@ export default function LandingScreen({navigation}) {
     )
 }
 
+const styles = {
+    wrapper = {
+        flex:1,
+        justifyContent: 'center'
+    }
+}
