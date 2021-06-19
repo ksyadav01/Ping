@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, View, Button} from 'react-native'
+import {Text, View, Button, StyleSheet} from 'react-native'
 
 export default function LandingScreen({navigation}) {
     return (
@@ -16,9 +16,9 @@ export default function LandingScreen({navigation}) {
     )
 }
 
-const styles = {
-    wrapper = {
+const styles = StyleSheet.create({
+    wrapper: {
         flex:1,
         justifyContent: 'center'
     }
-}
+})
