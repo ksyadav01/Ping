@@ -140,21 +140,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: "0%"
     },
-    inputTextField1 :{
-        height: 40,
-        width: "75%",
-        borderBottomWidth: 1,
-        marginBottom: 36,
-        marginTop: 40
-
-    },
-    inputTextField2 :{
-        height: 40,
-        width: "75%",
-        borderColor: "#000000",
-        borderBottomWidth: 1,
-        marginBottom: 36
-    },
     button :{
         height: 50,
         width: "70%",
@@ -173,7 +158,8 @@ const styles = StyleSheet.create({
         fontFamily: "Oswald_400Regular",
     },
     member: {
-        marginTop: 20
+        marginTop: 20,
+        fontFamily: "Oswald_400Regular",
     },
     memberSignIn:{
         fontFamily: "Oswald_400Regular",
