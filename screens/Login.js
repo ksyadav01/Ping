@@ -70,6 +70,7 @@ export default function Login({navigation}) {
                                 marginBottom: 36,
                                 marginTop: 40,
                                 borderColor: pswdHover ? "#F20D54" : "#000000"}}
+                            secureTextEntry={true}
                             onChangeText={text => passwordChange(text)}
                             value={passwordData} 
                             placeholder = {"Password"}
