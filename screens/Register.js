@@ -26,7 +26,7 @@ export default function Register({navigation}) {
         <SafeAreaView>
             
             <StatusBar style="dark" />
-            <View>
+            <KeyboardAvoidingView>
                     <Text style={styles.welcome}>
                         Create Account,
                     </Text>
@@ -57,7 +57,7 @@ export default function Register({navigation}) {
                         title = "Register"
                         onPress = {() => navigation.navigate("Login")}
                     />
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
