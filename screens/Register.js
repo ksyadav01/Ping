@@ -36,7 +36,7 @@ export default function Register({navigation}) {
                         Sign up to get started!
                     </Text>
                     <View style={styles.inputHolder}>
-                        <Image source={logo} style={{ width: 200, height: 200 }} /> 
+                        
                         <TextInput
                             style={styles.inputTextField1}
                             placeholder = {"Email"}
@@ -49,16 +49,16 @@ export default function Register({navigation}) {
                             value={passwordData} 
                             placeholder = {"Password"}
                         />
-                    </View>
                     
-                    <Button
-                        title = "Sign Up"
-                        onPress = {() => navigation.navigate("Register")}
-                    />
-                    <Button
-                        title = "Register"
-                        onPress = {() => navigation.navigate("Login")}
-                    />
+                        <Button
+                            title = "Sign Up"
+                            onPress = {() => navigation.navigate("Register")}
+                        />
+                        <Button
+                            title = "Register"
+                            onPress = {() => navigation.navigate("Login")}
+                        />
+                    </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
         </TouchableWithoutFeedback>
@@ -74,7 +74,7 @@ export default function Register({navigation}) {
 
 const styles = StyleSheet.create({
     wrapper: {
-        paddingTop: Constants.statusBarHeight,
+        marginTop: Constants.statusBarHeight,
 
         //justifyContent: 'center'
     },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     welcome:{
         fontSize: 50,
         paddingLeft: 20,
-        paddingTop: 50,
+        marginTop: 50,
         fontFamily: "Oswald_400Regular",
     },
     signin:{
