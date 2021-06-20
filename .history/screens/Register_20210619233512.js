@@ -16,8 +16,7 @@ import logo from "../assets/Logo.png"
 export default function Register({navigation}) {
     const [loginData, loginChange] = React.useState('');
     const [passwordData, passwordChange] = React.useState('');
-    const [loginHover, setLoginHoverColor] 	= React.useState(false);
-    const [pswdHover, setPwdHoverColor] 	= React.useState(false);
+    const [textHover, setHoverColor] 	= React.useState(false);
     let [fontsLoaded] = useFonts({
         Oswald_400Regular
       });
@@ -43,27 +42,20 @@ export default function Register({navigation}) {
                     <View style={styles.inputHolder}>
                         
                         <TextInput
-                            onFocus={() => setLoginHoverColor(true)} onBlur={() => setLoginHoverColor(false)}
+                            //onFocus={() => setHoverColor(true)} onBlur={() => setHoverColor(false)}
                             style={{
                                 height: 40,
                                 width: "75%",
                                 borderBottomWidth: 1,
                                 marginBottom: 36,
                                 marginTop: 40,
-                                borderColor: loginHover ? "#F20D54" : "#000000"}}
+                                borderColor: true ? "#000000" : "#F20D54"}}
                             placeholder = {"Email"}
                             onChangeText={text => loginChange(text)}
                             value={loginData} 
                         />
                         <TextInput
-                            onFocus={() => setPwdHoverColor(true)} onBlur={() => setPwdHoverColor(false)}
-                            style={{
-                                height: 40,
-                                width: "75%",
-                                borderBottomWidth: 1,
-                                marginBottom: 36,
-                                marginTop: 40,
-                                borderColor: pswdHover ? "#F20D54" : "#000000"}}
+                            style={styles.inputTextField2}
                             onChangeText={text => passwordChange(text)}
                             value={passwordData} 
                             placeholder = {"Password"}
