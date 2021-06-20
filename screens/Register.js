@@ -1,5 +1,13 @@
 import React from 'react'
-import {Text, View, Button, SafeAreaView, StyleSheet} from 'react-native'
+import {Text, 
+    View, 
+    Button, 
+    SafeAreaView, 
+    StyleSheet, 
+    Image, 
+    KeyboardAvoidingView, 
+    Keyboard,
+    TouchableWithoutFeedback} from 'react-native'
 import {
     useFonts,
     Roboto_400Regular,
@@ -24,7 +32,7 @@ export default function Register({navigation}) {
         <SafeAreaView style={styles.wrapper}>
             
             <StatusBar style="dark" />
-            <View>
+            <KeyboardAvoidingView>
                     <Text style={styles.welcome}>
                         Create Account,
                     </Text>
@@ -53,7 +61,7 @@ export default function Register({navigation}) {
                         title = "Register"
                         onPress = {() => navigation.navigate("Login")}
                     />
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
         )
     }
