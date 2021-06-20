@@ -39,12 +39,11 @@ export default function Register({navigation}) {
                         Create Account,
                     </Text>
                     <View>
-                        {
-                            (!loginHover && !pswdHover )&&
-                            <Text style={styles.signin}>
-                                Sign up to get started!
-                            </Text>
-                        }
+                        {!loginHover &&
+                        <Text style={styles.signin}>
+                            Sign up to get started!
+                        </Text>
+    }
                     </View>
                     <View style={styles.inputHolder}>
                         
@@ -91,10 +90,10 @@ export default function Register({navigation}) {
                             title = "Register"
                             onPress = {() => navigation.navigate("Login")}
                         /> */}
-                        <Text style={styles.member}>Im already a member.&nbsp; 
+                        <Text style={styles.member}>Im already a member. 
                             <Text onPress={() => navigation.navigate('Login')}
                                 style={styles.memberSignIn}> 
-                                Sign in
+                                &nbsp; Sign in
                             </Text>
                             
                         </Text>
@@ -174,11 +173,6 @@ const styles = StyleSheet.create({
     },
     member: {
         marginTop: 20
-    },
-    memberSignIn:{
-        fontFamily: "Oswald_400Regular",
-        color: "#F20D54",
-        textDecorationLine: "underline"
     }
 
 

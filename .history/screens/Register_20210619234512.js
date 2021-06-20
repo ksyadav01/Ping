@@ -12,7 +12,6 @@ import { TextInput } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import logo from "../assets/Logo.png"
-import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Register({navigation}) {
     const [loginData, loginChange] = React.useState('');
@@ -38,14 +37,9 @@ export default function Register({navigation}) {
                     <Text style={styles.welcome}>
                         Create Account,
                     </Text>
-                    <View>
-                        {
-                            (!loginHover && !pswdHover )&&
-                            <Text style={styles.signin}>
-                                Sign up to get started!
-                            </Text>
-                        }
-                    </View>
+                    <Text style={styles.signin}>
+                        Sign up to get started!
+                    </Text>
                     <View style={styles.inputHolder}>
                         
                         <TextInput
@@ -74,30 +68,15 @@ export default function Register({navigation}) {
                             value={passwordData} 
                             placeholder = {"Password"}
                         />
-                        <LinearGradient
-                            // Button Linear Gradient
-                            colors={['#F20D54', '#FAE105']}
-                            start={{x:0.1, y:0.1}}
-                            end={{x:0.9, y:0.8}}
-                            locations={[0.1, 0.9]}
-                            style={styles.button}>
-                            <Text style={styles.buttonText}>Create Account</Text>
-                        </LinearGradient>
-                        {/* <Button
+                    
+                        <Button
                             title = "Sign Up"
                             onPress = {() => navigation.navigate("Register")}
                         />
                         <Button
                             title = "Register"
                             onPress = {() => navigation.navigate("Login")}
-                        /> */}
-                        <Text style={styles.member}>Im already a member.&nbsp; 
-                            <Text onPress={() => navigation.navigate('Login')}
-                                style={styles.memberSignIn}> 
-                                Sign in
-                            </Text>
-                            
-                        </Text>
+                        />
                     </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -125,7 +104,7 @@ const styles = StyleSheet.create({
     welcome:{
         fontSize: 50,
         paddingLeft: 20,
-        marginTop: "15%",
+        marginTop: 50,
         fontFamily: "Oswald_400Regular",
     },
     signin:{
@@ -133,12 +112,10 @@ const styles = StyleSheet.create({
         color: "#999999",
         paddingLeft: 20,
         fontFamily: "Oswald_400Regular",
-        paddingBottom: "15%"
         //paddingTop: Constants.statusBarHeight,
     },
     inputHolder:{
-        alignItems: "center",
-        paddingTop: "0%"
+        alignItems: "center"
     },
     inputTextField1 :{
         height: 40,
@@ -154,33 +131,7 @@ const styles = StyleSheet.create({
         borderColor: "#000000",
         borderBottomWidth: 1,
         marginBottom: 36
-    },
-    button :{
-        height: 50,
-        width: "70%",
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "center",
-        borderWidth: 1,
-        borderColor: "transparent",
-        borderRadius: 15,
-        marginTop: "15%",
-        
-    },
-    buttonText: {
-        fontSize: 28,
-        color: "white",
-        fontFamily: "Oswald_400Regular",
-    },
-    member: {
-        marginTop: 20
-    },
-    memberSignIn:{
-        fontFamily: "Oswald_400Regular",
-        color: "#F20D54",
-        textDecorationLine: "underline"
     }
-
 
 })
 

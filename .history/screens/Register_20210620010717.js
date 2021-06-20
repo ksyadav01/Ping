@@ -91,10 +91,10 @@ export default function Register({navigation}) {
                             title = "Register"
                             onPress = {() => navigation.navigate("Login")}
                         /> */}
-                        <Text style={styles.member}>Im already a member.&nbsp; 
+                        <Text style={styles.member}>Im already a member. 
                             <Text onPress={() => navigation.navigate('Login')}
                                 style={styles.memberSignIn}> 
-                                Sign in
+                                &nbsp; Sign in
                             </Text>
                             
                         </Text>
@@ -177,8 +177,8 @@ const styles = StyleSheet.create({
     },
     memberSignIn:{
         fontFamily: "Oswald_400Regular",
-        color: "#F20D54",
-        textDecorationLine: "underline"
+        color: "#004bff",
+        textDecorationStyle: "underline"
     }
 
 

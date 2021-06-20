@@ -38,14 +38,9 @@ export default function Register({navigation}) {
                     <Text style={styles.welcome}>
                         Create Account,
                     </Text>
-                    <View>
-                        {
-                            (!loginHover && !pswdHover )&&
-                            <Text style={styles.signin}>
-                                Sign up to get started!
-                            </Text>
-                        }
-                    </View>
+                    <Text style={styles.signin}>
+                        Sign up to get started!
+                    </Text>
                     <View style={styles.inputHolder}>
                         
                         <TextInput
@@ -77,11 +72,11 @@ export default function Register({navigation}) {
                         <LinearGradient
                             // Button Linear Gradient
                             colors={['#F20D54', '#FAE105']}
-                            start={{x:0.1, y:0.1}}
-                            end={{x:0.9, y:0.8}}
-                            locations={[0.1, 0.9]}
+                            start={{x:0.2, y:0.1}}
+                            end={{x:0.7, y:0.8}}
+                            locations={[0.1, 0.7]}
                             style={styles.button}>
-                            <Text style={styles.buttonText}>Create Account</Text>
+                            <Text style={styles.text}>Sign in with Facebook</Text>
                         </LinearGradient>
                         {/* <Button
                             title = "Sign Up"
@@ -91,13 +86,6 @@ export default function Register({navigation}) {
                             title = "Register"
                             onPress = {() => navigation.navigate("Login")}
                         /> */}
-                        <Text style={styles.member}>Im already a member.&nbsp; 
-                            <Text onPress={() => navigation.navigate('Login')}
-                                style={styles.memberSignIn}> 
-                                Sign in
-                            </Text>
-                            
-                        </Text>
                     </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -133,12 +121,11 @@ const styles = StyleSheet.create({
         color: "#999999",
         paddingLeft: 20,
         fontFamily: "Oswald_400Regular",
-        paddingBottom: "15%"
         //paddingTop: Constants.statusBarHeight,
     },
     inputHolder:{
         alignItems: "center",
-        paddingTop: "0%"
+        paddingTop: "15%"
     },
     inputTextField1 :{
         height: 40,
@@ -164,21 +151,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "transparent",
         borderRadius: 15,
-        marginTop: "15%",
-        
-    },
-    buttonText: {
-        fontSize: 28,
-        color: "white",
-        fontFamily: "Oswald_400Regular",
-    },
-    member: {
-        marginTop: 20
-    },
-    memberSignIn:{
-        fontFamily: "Oswald_400Regular",
-        color: "#F20D54",
-        textDecorationLine: "underline"
+        marginTop: "15%"
     }
 
 

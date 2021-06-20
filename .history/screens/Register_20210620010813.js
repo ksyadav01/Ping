@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     },
     memberSignIn:{
         fontFamily: "Oswald_400Regular",
-        color: "#F20D54",
+        color: "#004bff",
         textDecorationLine: "underline"
     }
 
