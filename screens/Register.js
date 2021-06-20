@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, View, Button, SafeAreaView, StyleSheet} from 'react-native'
+import {Text, View, Button, SafeAreaView, StyleSheet, Image, KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard} from 'react-native'
 import {
     useFonts,
     Roboto_400Regular,
@@ -21,7 +21,9 @@ export default function Register({navigation}) {
       });
     if (fontsLoaded){
         return (
-        <SafeAreaView style={styles.wrapper}>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.wrapper}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView>
             
             <StatusBar style="dark" />
             <View>
@@ -35,6 +37,7 @@ export default function Register({navigation}) {
                         <Image source={logo} style={{ width: 200, height: 200 }} /> 
                         <TextInput
                             style={styles.inputTextField}
+                            placeholder = {"Email"}
                             onChangeText={text => loginChange(text)}
                             value={loginData} 
                         />
@@ -42,6 +45,7 @@ export default function Register({navigation}) {
                             style={styles.inputTextField}
                             onChangeText={text => passwordChange(text)}
                             value={passwordData} 
+                            placeholder = {"Password"}
                         />
                     </View>
                     
@@ -55,6 +59,10 @@ export default function Register({navigation}) {
                     />
             </View>
         </SafeAreaView>
+        </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+        
+
         )
     }
     else {
