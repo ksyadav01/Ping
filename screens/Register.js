@@ -11,6 +11,7 @@ import { TextInput } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
+import logo from "../assets/Logo.png"
 
 export default function Register({navigation}) {
     const [loginData, loginChange] = React.useState('');
@@ -31,6 +32,7 @@ export default function Register({navigation}) {
                         Sign up to get started!
                     </Text>
                     <View style={styles.inputHolder}>
+                        <Image source={logo} style={{ width: 200, height: 200 }} /> 
                         <TextInput
                             style={styles.inputTextField}
                             onChangeText={text => loginChange(text)}
