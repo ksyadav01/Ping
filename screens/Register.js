@@ -21,12 +21,14 @@ export default function Register({navigation}) {
       });
     if (fontsLoaded){
         return (
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.wrapper}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <SafeAreaView>
             
             <StatusBar style="dark" />
-            <KeyboardAvoidingView>
+            <KeyboardAvoidingView style={styles.test}>
                     <Text style={styles.welcome}>
                         Create Account,
                     </Text>
@@ -36,13 +38,13 @@ export default function Register({navigation}) {
                     <View style={styles.inputHolder}>
                         <Image source={logo} style={{ width: 200, height: 200 }} /> 
                         <TextInput
-                            style={styles.inputTextField}
+                            style={styles.inputTextField1}
                             placeholder = {"Email"}
                             onChangeText={text => loginChange(text)}
                             value={loginData} 
                         />
                         <TextInput
-                            style={styles.inputTextField}
+                            style={styles.inputTextField2}
                             onChangeText={text => passwordChange(text)}
                             value={passwordData} 
                             placeholder = {"Password"}
@@ -76,6 +78,10 @@ const styles = StyleSheet.create({
 
         //justifyContent: 'center'
     },
+    test: {
+        
+        justifyContent: "space-around"
+    },
     welcome:{
         fontSize: 50,
         paddingLeft: 20,
@@ -92,13 +98,22 @@ const styles = StyleSheet.create({
     inputHolder:{
         alignItems: "center"
     },
-    inputTextField :{
+    inputTextField1 :{
         height: 40,
-        width: "40%",
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 4,
+        width: "60%",
+        borderColor: "#000000",
+        borderBottomWidth: 1,
+        marginBottom: 36,
+        marginTop: 40
 
+    },
+    inputTextField2 :{
+        height: 40,
+        width: "60%",
+        borderColor: "#000000",
+        borderBottomWidth: 1,
+        marginBottom: 36
     }
+
 })
 
