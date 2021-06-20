@@ -1,25 +1,94 @@
 import React from 'react'
 import {Text, View, Button, SafeAreaView, StyleSheet} from 'react-native'
+import {
+    useFonts,
+    Roboto_400Regular,
+    Oswald_400Regular,
+    OpenSans_400Regular,
+    Oswald_200ExtraLight
+  } from "@expo-google-fonts/dev";
+import { TextInput } from 'react-native';
+
+import { StatusBar } from 'expo-status-bar';
+import Constants from 'expo-constants';
 
 export default function Login({navigation}) {
-    return (
-       <SafeAreaView style={styles.wrapper}>
-            <Button
-            title = "Sign Up"
-            onPress = {() => navigation.navigate("Register")}
-            />
-            <Button
-            title = "Register"
-            onPress = {() => navigation.navigate("Login")}
-            />
-       </SafeAreaView>
-    )
+    const [loginData, loginChange] = React.useState('');
+    const [passwordData, passwordChange] = React.useState('');
+    let [fontsLoaded] = useFonts({
+        Oswald_400Regular
+      });
+    if (fontsLoaded){
+        return (
+        <SafeAreaView style={styles.wrapper}>
+            
+            <StatusBar style="dark" />
+            <View>
+                    <Text style={styles.welcome}>
+                        Welcome,
+                    </Text>
+                    <Text style={styles.signin}>
+                        Sign in to continue!
+                    </Text>
+                    <View style={styles.inputHolder}>
+                        <TextInput
+                            style={styles.inputTextField}
+                            onChangeText={text => loginChange(text)}
+                            value={loginData} 
+                        />
+                        <TextInput
+                            style={styles.inputTextField}
+                            onChangeText={text => passwordChange(text)}
+                            value={passwordData} 
+                        />
+                    </View>
+                    
+                    <Button
+                        title = "Sign Up"
+                        onPress = {() => navigation.navigate("Register")}
+                    />
+                    <Button
+                        title = "Register"
+                        onPress = {() => navigation.navigate("Login")}
+                    />
+            </View>
+        </SafeAreaView>
+        )
+    }
+    else {
+        return <View></View>
+    }
 }
 
 const styles = StyleSheet.create({
     wrapper: {
-        flex:1,
-        justifyContent: 'center'
+        paddingTop: Constants.statusBarHeight,
+
+        //justifyContent: 'center'
+    },
+    welcome:{
+        fontSize: 50,
+        paddingLeft: 20,
+        paddingTop: 50,
+        fontFamily: "Oswald_400Regular",
+    },
+    signin:{
+        fontSize: 30,
+        color: "#999999",
+        paddingLeft: 20,
+        fontFamily: "Oswald_400Regular",
+        //paddingTop: Constants.statusBarHeight,
+    },
+    inputHolder:{
+        alignItems: "center"
+    },
+    inputTextField :{
+        height: 40,
+        width: "40%",
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 4,
+
     }
 })
 

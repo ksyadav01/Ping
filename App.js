@@ -7,13 +7,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 
 import LoginScreen from './screens/Login'
+import RegisterScreen from './screens/Register'
 
 const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName = "Landing">
-        <Stack.Screen name = "Landing" component={LoginScreen} options={{headerShown: false}}/>
+        <Stack.Screen name = "Landing" component={RegisterScreen} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
