@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 //Screens
 
-
+import {firebase} from './firebase/config'
 import LoginScreen from './screens/Login'
 
 const Stack = createStackNavigator();
