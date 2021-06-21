@@ -7,10 +7,11 @@ import {
     OpenSans_400Regular,
     Oswald_200ExtraLight
   } from "@expo-google-fonts/dev";
-import { TextInput } from 'react-native';
-
+import { TextInput, TouchableOpacity } from 'react-native';
+import emailjs from "emailjs-com";
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
+import email from 'react-native-email'
 import logo from "../assets/Logo.png"
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -25,6 +26,31 @@ export default function Register({navigation}) {
     //let handleFocus = () => setHoverColor(true)
 
     //let handleBlur = () => setHoverColor(false)
+
+    let params = {
+        name: "Joe"
+    }
+    let emailSendData = {
+        service_id: 'service_xbc6r9l',
+        template_id: 'template_vg4uznw',
+        user_id: 'user_TpxqHiaC51mHQQ2EPFKzQ',
+        template_params: {
+            'name': 'James',
+            'email': 'karan.yadav@stonybrook.edu'
+        }
+    }
+    function sendEmail() {
+        //e.preventDefault();
+        alert("test")
+        emailjs.send(emailSendData)
+          .then((result) => {
+              console.log(result.text);
+          }, (error) => {
+              console.log(error.text);
+          });
+      }
+      
+    
     if (fontsLoaded){
         return (
         <KeyboardAvoidingView
@@ -47,9 +73,9 @@ export default function Register({navigation}) {
                         }
                     </View>
                     <View style={styles.inputHolder}>
-                        
                         <TextInput
                             onFocus={() => setLoginHoverColor(true)} onBlur={() => setLoginHoverColor(false)}
+                            label="Title"
                             style={{
                                 height: 40,
                                 width: "75%",
@@ -75,15 +101,21 @@ export default function Register({navigation}) {
                             value={passwordData} 
                             placeholder = {"Password"}
                         />
-                        <LinearGradient
-                            // Button Linear Gradient
-                            colors={['#F20D54', '#FAE105']}
-                            start={{x:0.1, y:0.1}}
-                            end={{x:0.9, y:0.8}}
-                            locations={[0.1, 0.9]}
-                            style={styles.button}>
-                            <Text style={styles.buttonText}>Create Account</Text>
-                        </LinearGradient>
+                        <TouchableOpacity onPress={sendEmail}>
+
+                            <LinearGradient
+                                // Button Linear Gradient
+                                colors={['#F20D54', '#FAE105']}
+                                start={{x:0.1, y:0.1}}
+                                end={{x:0.9, y:0.8}}
+                                locations={[0.1, 0.9]}
+                                style={styles.button}
+                                onPress={sendEmail}
+                                >
+                                <Text style={styles.buttonText}>Create Account</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+
                         {/* <Button
                             title = "Sign Up"
                             onPress = {() => navigation.navigate("Register")}
