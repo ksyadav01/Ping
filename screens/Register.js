@@ -28,7 +28,8 @@ export default function Register({navigation}) {
     //let handleBlur = () => setHoverColor(false)
 
     let params = {
-        name: "Joe"
+        name: 'James',
+        email: 'karan.yadav@stonybrook.edu'
     }
     let emailSendData = {
         service_id: 'service_xbc6r9l',
@@ -42,7 +43,7 @@ export default function Register({navigation}) {
     function sendEmail() {
         //e.preventDefault();
         alert("test")
-        emailjs.send(emailSendData)
+        emailjs.send('service_xbc6r9l', 'template_vg4uznw', params, 'user_TpxqHiaC51mHQQ2EPFKzQ')
           .then((result) => {
               console.log(result.text);
           }, (error) => {
