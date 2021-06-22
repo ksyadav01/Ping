@@ -3,12 +3,13 @@ import '@firebase/auth';
 import '@firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyC8aBGhtls2gC2FFrYHsJxgkATTLOIkdd4",
-    authDomain: "ping-5790b.firebaseapp.com",
-    projectId: "ping-5790b",
-    storageBucket: "ping-5790b.appspot.com",
-    messagingSenderId: "8159093360",
-    appId: "1:8159093360:web:22f0e351e0c755593d4ab5"
+    apiKey: "AIzaSyCwRLYXpwwgcDidNvju_TSo5lPBm7OL65M",
+    authDomain: "pingapp-1.firebaseapp.com",
+    projectId: "pingapp-1",
+    storageBucket: "pingapp-1.appspot.com",
+    messagingSenderId: "307902833105",
+    appId: "1:307902833105:web:2de3aac0a33c573e6900f0",
+    measurementId: "G-QMFVB9NKEK"
   };
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
