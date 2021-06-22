@@ -31,7 +31,7 @@ const LoginScreen = ({props, navigation}) => {
     const [passwordData, passwordChange] = React.useState('');
     const [loginHover, setLoginHoverColor] 	= React.useState(false);
     const [pswdHover, setPwdHoverColor] 	= React.useState(false);
-   
+    const [name, setName] = React.useState("");
     let [fontsLoaded] = useFonts({
         Oswald_400Regular
     });
@@ -40,12 +40,15 @@ const LoginScreen = ({props, navigation}) => {
         try {
           const result = await Google.logInAsync({
             behavior: "web",
-            androidClientId: "307902833105-btlu18r79er40lof72sni1b47lvqdr0q.apps.googleusercontent.com",
+            androidClientId: "307902833105-brikld3kgipjf1tohfn1h3a8bj2qi63g.apps.googleusercontent.com",
             iosClientId: "307902833105-rvcs6agkh8d49gl9k249sjvfhfhvm2cc.apps.googleusercontent.com",
             scopes: ['profile', 'email'],
           });
       
           if (result.type === 'success') {
+            navigation.navigate('HomeScreen');
+            //setName(result.name)
+            console.log(result)
             return result.accessToken;
           } else {
             return { cancelled: true };
