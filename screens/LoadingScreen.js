@@ -16,9 +16,17 @@ const LoadingScreen = ({props, navigation}) => {
     checkIfLoggedIn = () => {
         firebase.auth().onAuthStateChanged(user => {
             if(user){
+                navigation.reset({
+                    index: 0,
+                    routes: [{name: 'Home'}],
+                  });
                 navigation.navigate('Home')
             }
             else {
+                navigation.reset({
+                    index: 0,
+                    routes: [],
+                  });
                 navigation.navigate('Login')
             }
         })
