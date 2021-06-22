@@ -1,5 +1,14 @@
 import React from 'react';
-import {Text, View, Button, SafeAreaView, StyleSheet, Image, KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard} from 'react-native'
+import {Text, 
+    View, 
+    Button, 
+    SafeAreaView, 
+    StyleSheet, 
+    Image, 
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Keyboard} 
+    from 'react-native'
 import {
     useFonts,
     Roboto_400Regular,
@@ -11,7 +20,7 @@ import { TextInput } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
-import logo from "../assets/Logo.png"
+import firebase from 'firebase';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen({navigation}) {
@@ -35,7 +44,8 @@ export default function HomeScreen({navigation}) {
             
             <StatusBar style="dark" />
             <View>
-                text
+                <Text>text</Text>
+                <Button title="Sign out" onPress={()=>firebase.auth().signOut()}></Button>
             </View>
         </SafeAreaView>
         </TouchableWithoutFeedback>
