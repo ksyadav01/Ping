@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {Text, View, Button, SafeAreaView, StyleSheet, Image, KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard} from 'react-native'
 import {
     useFonts,
@@ -10,7 +10,6 @@ import {
 import { ActivityIndicator } from 'react-native';
 
 import firebase from 'firebase'
-import { useEffect } from 'react/cjs/react.production.min';
 const LoadingScreen = ({props, navigation}) => {
     
     checkIfLoggedIn = () => {
@@ -32,7 +31,10 @@ const LoadingScreen = ({props, navigation}) => {
         })
     }
     checkIfLoggedIn();
-    navigation.navigate('Login')
+
+    useEffect(()=>{
+        navigation.navigate('Login')
+    })
     return (
         <View style={styles.container}>
             <ActivityIndicator size="large" />
