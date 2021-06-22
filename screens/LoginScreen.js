@@ -1,6 +1,14 @@
-import React from 'react';
-import RNSmtpMailer from "react-native-smtp-mailer";
-import {Text, View, Button, SafeAreaView, StyleSheet, Image, KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard} from 'react-native'
+import React, { Component } from 'react';
+import {Text,
+    View,
+    Button,
+    SafeAreaView, 
+    StyleSheet, 
+    Image, 
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Keyboard,
+    TouchableOpacity} from 'react-native'
 import {
     useFonts,
     Roboto_400Regular,
@@ -8,24 +16,47 @@ import {
     OpenSans_400Regular,
     Oswald_200ExtraLight
   } from "@expo-google-fonts/dev";
-import { TextInput, TouchableOpacity } from 'react-native';
-import emailjs from "emailjs-com";
+import { TextInput } from 'react-native';
+import * as Google from 'expo-google-app-auth';
+//import * as Google from 'expo-google-sign-in';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
-import email from 'react-native-email'
 import logo from "../assets/Logo.png"
 import { LinearGradient } from 'expo-linear-gradient';
+import { useEffect } from 'react/cjs/react.production.min';
 
-export default function Register({navigation}) {
+const LoginScreen = ({props, navigation}) => {
+    
     const [loginData, loginChange] = React.useState('');
     const [passwordData, passwordChange] = React.useState('');
     const [loginHover, setLoginHoverColor] 	= React.useState(false);
     const [pswdHover, setPwdHoverColor] 	= React.useState(false);
+   
     let [fontsLoaded] = useFonts({
         Oswald_400Regular
-      });
+    });
+
+    signInWithGoogleAsync = async()=> {
+        try {
+          const result = await Google.logInAsync({
+            behavior: "web",
+            androidClientId: "307902833105-btlu18r79er40lof72sni1b47lvqdr0q.apps.googleusercontent.com",
+            iosClientId: "307902833105-rvcs6agkh8d49gl9k249sjvfhfhvm2cc.apps.googleusercontent.com",
+            scopes: ['profile', 'email'],
+          });
+      
+          if (result.type === 'success') {
+            return result.accessToken;
+          } else {
+            return { cancelled: true };
+          }
+        } catch (e) {
+          return { error: true };
+        }
+      }
+
     
-    
+
     if (fontsLoaded){
         return (
         <KeyboardAvoidingView
@@ -37,32 +68,32 @@ export default function Register({navigation}) {
             <StatusBar style="dark" />
             <KeyboardAvoidingView style={styles.test}>
                     <Text style={styles.welcome}>
-                        Create Account,
+                        Welcome,
                     </Text>
                     <View>
                         {
                             (!loginHover && !pswdHover )&&
                             <Text style={styles.signin}>
-                                Sign up to get started!
+                                Sign in to continue!
                             </Text>
                         }
                     </View>
                     <View style={styles.inputHolder}>
+                        
                         <TextInput
                             onFocus={() => setLoginHoverColor(true)} onBlur={() => setLoginHoverColor(false)}
-                            label="Title"
                             style={{
                                 height: 40,
                                 width: "75%",
                                 borderBottomWidth: 1,
                                 marginBottom: 36,
-                                marginTop: 150,
+                                marginTop: 40,
                                 borderColor: loginHover ? "#F20D54" : "#000000"}}
                             placeholder = {"Email"}
                             onChangeText={text => loginChange(text)}
                             value={loginData} 
                         />
-                        {/* <TextInput
+                        <TextInput
                             onFocus={() => setPwdHoverColor(true)} onBlur={() => setPwdHoverColor(false)}
                             style={{
                                 height: 40,
@@ -75,34 +106,23 @@ export default function Register({navigation}) {
                             onChangeText={text => passwordChange(text)}
                             value={passwordData} 
                             placeholder = {"Password"}
-                        /> */}
-                        <TouchableOpacity style={styles.button}>
-
+                        />
+                        <TouchableOpacity style={styles.button} onPress={()=>this.signInWithGoogleAsync()}>
                             <LinearGradient
                                 // Button Linear Gradient
                                 colors={['#F20D54', '#FAE105']}
                                 start={{x:0.1, y:0.1}}
                                 end={{x:0.9, y:0.8}}
                                 locations={[0.1, 0.9]}
-                                style={styles.button}
-                                //onPress={sendEmail}
-                                >
-                                <Text style={styles.buttonText}>Create Account</Text>
+                                style={styles.button}>
+                                <Text style={styles.buttonText}>Login</Text>
                             </LinearGradient>
                         </TouchableOpacity>
 
-                        {/* <Button
-                            title = "Sign Up"
-                            onPress = {() => navigation.navigate("Register")}
-                        />
-                        <Button
-                            title = "Register"
-                            onPress = {() => navigation.navigate("Login")}
-                        /> */}
-                        <Text style={styles.member}>Im already a member.&nbsp; 
-                            <Text onPress={() => navigation.navigate('Login')}
+                        <Text style={styles.member}>Not a member?&nbsp; 
+                            <Text onPress={() => navigation.navigate('Register')}
                                 style={styles.memberSignIn}> 
-                                Sign in
+                                Sign up
                             </Text>
                             
                         </Text>
@@ -118,7 +138,9 @@ export default function Register({navigation}) {
     else {
         return <View></View>
     }
+    
 }
+export default LoginScreen
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -166,8 +188,8 @@ const styles = StyleSheet.create({
         fontFamily: "Oswald_400Regular",
     },
     member: {
-        marginTop: 20,
         fontFamily: "Oswald_400Regular",
+        marginTop: 20
     },
     memberSignIn:{
         fontFamily: "Oswald_400Regular",
@@ -177,4 +199,3 @@ const styles = StyleSheet.create({
 
 
 })
-

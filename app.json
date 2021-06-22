@@ -20,13 +20,27 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.pingcorp.ping",
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyCwRLYXpwwgcDidNvju_TSo5lPBm7OL65M",
+          "authDomain": "pingapp-1.firebaseapp.com",
+          "projectId": "pingapp-1",
+          "storageBucket": "pingapp-1.appspot.com",
+          "messagingSenderId": "307902833105",
+          "appId": "1:307902833105:web:2de3aac0a33c573e6900f0",
+          "measurementId": "G-QMFVB9NKEK"
+        }
+      }
     }
   }
 }

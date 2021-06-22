@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "307902833105",
+    "project_id": "pingapp-1",
+    "storage_bucket": "pingapp-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307902833105:android:71ec76493e35c1586900f0",
+        "android_client_info": {
+          "package_name": "com.pingcorp.ping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307902833105-btlu18r79er40lof72sni1b47lvqdr0q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pingcorp.ping",
+            "certificate_hash": "319a870bf4ea12d5695cd66b954fc2bd7aaf3be9"
+          }
+        },
+        {
+          "client_id": "307902833105-h3khupcn5kgn6s3hlajl4ghv1gmmdhp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdQBidfvDUQx6WbGKQ64A25Z4qPSdH9B4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307902833105-h3khupcn5kgn6s3hlajl4ghv1gmmdhp6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "307902833105-rvcs6agkh8d49gl9k249sjvfhfhvm2cc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "host.exp.exponent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

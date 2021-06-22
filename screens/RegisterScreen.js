@@ -7,14 +7,13 @@ import {
     OpenSans_400Regular,
     Oswald_200ExtraLight
   } from "@expo-google-fonts/dev";
-import { TextInput } from 'react-native';
-
+import { TextInput, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import logo from "../assets/Logo.png"
 import { LinearGradient } from 'expo-linear-gradient';
-
-export default function Login({navigation}) {
+import * as firebase from 'firebase';
+export default function Register({navigation}) {
     const [loginData, loginChange] = React.useState('');
     const [passwordData, passwordChange] = React.useState('');
     const [loginHover, setLoginHoverColor] 	= React.useState(false);
@@ -22,9 +21,8 @@ export default function Login({navigation}) {
     let [fontsLoaded] = useFonts({
         Oswald_400Regular
       });
-    //let handleFocus = () => setHoverColor(true)
-
-    //let handleBlur = () => setHoverColor(false)
+    
+    
     if (fontsLoaded){
         return (
         <KeyboardAvoidingView
@@ -36,32 +34,32 @@ export default function Login({navigation}) {
             <StatusBar style="dark" />
             <KeyboardAvoidingView style={styles.test}>
                     <Text style={styles.welcome}>
-                        Welcome,
+                        Create Account,
                     </Text>
                     <View>
                         {
                             (!loginHover && !pswdHover )&&
                             <Text style={styles.signin}>
-                                Sign in to continue!
+                                Sign up to get started!
                             </Text>
                         }
                     </View>
                     <View style={styles.inputHolder}>
-                        
                         <TextInput
                             onFocus={() => setLoginHoverColor(true)} onBlur={() => setLoginHoverColor(false)}
+                            label="Title"
                             style={{
                                 height: 40,
                                 width: "75%",
                                 borderBottomWidth: 1,
                                 marginBottom: 36,
-                                marginTop: 40,
+                                marginTop: 150,
                                 borderColor: loginHover ? "#F20D54" : "#000000"}}
                             placeholder = {"Email"}
                             onChangeText={text => loginChange(text)}
                             value={loginData} 
                         />
-                        <TextInput
+                        {/* <TextInput
                             onFocus={() => setPwdHoverColor(true)} onBlur={() => setPwdHoverColor(false)}
                             style={{
                                 height: 40,
@@ -74,16 +72,22 @@ export default function Login({navigation}) {
                             onChangeText={text => passwordChange(text)}
                             value={passwordData} 
                             placeholder = {"Password"}
-                        />
-                        <LinearGradient
-                            // Button Linear Gradient
-                            colors={['#F20D54', '#FAE105']}
-                            start={{x:0.1, y:0.1}}
-                            end={{x:0.9, y:0.8}}
-                            locations={[0.1, 0.9]}
-                            style={styles.button}>
-                            <Text style={styles.buttonText}>Login</Text>
-                        </LinearGradient>
+                        /> */}
+                        <TouchableOpacity style={styles.button}>
+
+                            <LinearGradient
+                                // Button Linear Gradient
+                                colors={['#F20D54', '#FAE105']}
+                                start={{x:0.1, y:0.1}}
+                                end={{x:0.9, y:0.8}}
+                                locations={[0.1, 0.9]}
+                                style={styles.button}
+                                //onPress={sendEmail}
+                                >
+                                <Text style={styles.buttonText}>Create Account</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+
                         {/* <Button
                             title = "Sign Up"
                             onPress = {() => navigation.navigate("Register")}
@@ -92,10 +96,10 @@ export default function Login({navigation}) {
                             title = "Register"
                             onPress = {() => navigation.navigate("Login")}
                         /> */}
-                        <Text style={styles.member}>Not a member?&nbsp; 
-                            <Text onPress={() => navigation.navigate('Register')}
+                        <Text style={styles.member}>Im already a member.&nbsp; 
+                            <Text onPress={() => navigation.navigate('Login')}
                                 style={styles.memberSignIn}> 
-                                Sign up
+                                Sign in
                             </Text>
                             
                         </Text>
@@ -159,8 +163,8 @@ const styles = StyleSheet.create({
         fontFamily: "Oswald_400Regular",
     },
     member: {
+        marginTop: 20,
         fontFamily: "Oswald_400Regular",
-        marginTop: 20
     },
     memberSignIn:{
         fontFamily: "Oswald_400Regular",
@@ -170,3 +174,4 @@ const styles = StyleSheet.create({
 
 
 })
+
