@@ -4,6 +4,8 @@ import { NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createAppContainer,createSwitchNavigator } from 'react-navigation';
+import { Entypo } from '@expo/vector-icons'; // Location icon: location-pin, Search icon: magnifying-glass
+import { AntDesign } from '@expo/vector-icons'; // Plus icon: plussquareo
 //Screens
 
 import {firebase} from './firebase/config'
@@ -19,9 +21,9 @@ const Tab = createBottomTabNavigator();
 function HomeTabs() {
   return (
     <Tab.Navigator initialRouteName = "Home">
+      <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -29,9 +31,9 @@ function HomeTabs() {
 function ProfileTabs() {
   return (
     <Tab.Navigator initialRouteName = "Profile">
+      <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Map" component={ProfileScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -39,9 +41,9 @@ function ProfileTabs() {
 function CreateTabs() {
   return (
     <Tab.Navigator initialRouteName = "Create">
+      <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -49,9 +51,9 @@ function CreateTabs() {
 function MapTabs() {
   return (
     <Tab.Navigator initialRouteName = "Map">
+      <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
