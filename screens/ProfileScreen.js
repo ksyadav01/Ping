@@ -17,10 +17,11 @@ import {
     Oswald_200ExtraLight
   } from "@expo-google-fonts/dev";
 import { ActivityIndicator } from 'react-native';
+
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase'
 import { useEffect } from 'react/cjs/react.production.min';
-const HomeScreen = ({props, navigation}) => {
+const ProfileScreen = ({props, navigation}) => {
     
     let [fontsLoaded] = useFonts({
         Oswald_400Regular
@@ -36,7 +37,7 @@ const HomeScreen = ({props, navigation}) => {
             
             <StatusBar style="dark" />
             <View style={styles.container}>
-                <Text>Home Screen</Text>
+                <Text>Profile Screen</Text>
                 <Button title="Sign out" onPress={()=>firebase.auth().signOut()}></Button>
             </View>
         </SafeAreaView>
@@ -52,7 +53,7 @@ const HomeScreen = ({props, navigation}) => {
     
 
 }
-export default HomeScreen;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
     container: {

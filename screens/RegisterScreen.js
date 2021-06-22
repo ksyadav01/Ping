@@ -21,38 +21,7 @@ export default function Register({navigation}) {
     let [fontsLoaded] = useFonts({
         Oswald_400Regular
       });
-<<<<<<< HEAD
     
-=======
-    //let handleFocus = () => setHoverColor(true)
-
-    //let handleBlur = () => setHoverColor(false)
-
-    let params = {
-        name: 'James',
-        email: 'karan.yadav@stonybrook.edu'
-    }
-    let emailSendData = {
-        service_id: 'service_xbc6r9l',
-        template_id: 'template_vg4uznw',
-        user_id: 'user_TpxqHiaC51mHQQ2EPFKzQ',
-        template_params: {
-            'name': 'James',
-            'email': 'karan.yadav@stonybrook.edu'
-        }
-    }
-    function sendEmail() {
-        //e.preventDefault();
-        alert("test")
-        emailjs.send('service_xbc6r9l', 'template_vg4uznw', params, 'user_TpxqHiaC51mHQQ2EPFKzQ')
-          .then((result) => {
-              console.log(result.text);
-          }, (error) => {
-              console.log(error.text);
-          });
-      }
-      
->>>>>>> 1c72ce6 (sorta works)
     
     if (fontsLoaded){
         return (
