@@ -72,7 +72,7 @@ export default function App() {
         <Stack.Screen name = "Login" navigator={Stack} component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name = "Home" component={HomeTabs} options={{headerShown: false}}/>
         <Stack.Screen name = "Profile" component={ProfileTabs} options={{headerShown: false}}/>
-        <Stack.Screen name = "Loading" component={LoadingScreen} options={{headerShown: false}}/>
+        <Stack.Screen name = "Loading" component={LoadingScreen} options={{headerShown: false, gesturesEnabled: false}}/>
         <Stack.Screen name = "Create" component={CreateTabs} options={{headerShown: false}}/>
         <Stack.Screen name = "Map" component={MapTabs} options={{headerShown: false}}/>
       </Stack.Navigator>
