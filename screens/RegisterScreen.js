@@ -1,5 +1,4 @@
 import React from 'react';
-import RNSmtpMailer from "react-native-smtp-mailer";
 import {Text, View, Button, SafeAreaView, StyleSheet, Image, KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard} from 'react-native'
 import {
     useFonts,
@@ -9,13 +8,11 @@ import {
     Oswald_200ExtraLight
   } from "@expo-google-fonts/dev";
 import { TextInput, TouchableOpacity } from 'react-native';
-import emailjs from "emailjs-com";
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
-import email from 'react-native-email'
 import logo from "../assets/Logo.png"
 import { LinearGradient } from 'expo-linear-gradient';
-
+import * as firebase from 'firebase';
 export default function Register({navigation}) {
     const [loginData, loginChange] = React.useState('');
     const [passwordData, passwordChange] = React.useState('');
