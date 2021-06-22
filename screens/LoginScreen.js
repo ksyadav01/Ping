@@ -46,7 +46,7 @@ const LoginScreen = ({props, navigation}) => {
           });
       
           if (result.type === 'success') {
-            navigation.navigate('HomeScreen');
+            navigation.navigate('Home');
             //setName(result.name)
             console.log(result)
             return result.accessToken;
