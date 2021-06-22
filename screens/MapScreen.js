@@ -1,58 +1,37 @@
-import React, {Component} from 'react';
-import {Text,
-    View,
-    Button,
-    SafeAreaView, 
-    StyleSheet, 
-    Image, 
-    KeyboardAvoidingView,
-    TouchableWithoutFeedback,
-    Keyboard,
-    TouchableOpacity} from 'react-native'
-import {
-    useFonts,
-    Roboto_400Regular,
-    Oswald_400Regular,
-    OpenSans_400Regular,
-    Oswald_200ExtraLight
-  } from "@expo-google-fonts/dev";
-import { ActivityIndicator } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import firebase from 'firebase'
-import { useEffect } from 'react/cjs/react.production.min';
-const MapScreen = ({props, navigation}) => {
-    
-    let [fontsLoaded] = useFonts({
-        Oswald_400Regular
-    });
+import React, { useState, useEffect } from 'react';
+import { Platform, Text, View, StyleSheet } from 'react-native';
+import * as Location from 'expo-location';
 
-    if (fontsLoaded){
-        return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <SafeAreaView>
-            
-            <StatusBar style="dark" />
-            <View style={styles.container}>
-                <Text>Map Screen</Text>
-                <Button title="Sign out" onPress={()=>firebase.auth().signOut()}></Button>
-            </View>
-        </SafeAreaView>
-        </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-        
+export default function App() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
-        )
-    }
-    else {
-        return <View></View>
-    }
-    
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
 
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.paragraph}>{text}</Text>
+    </View>
+  );
 }
-export default MapScreen;
 
 const styles = StyleSheet.create({
     container: {
