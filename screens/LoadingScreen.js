@@ -22,19 +22,18 @@ const LoadingScreen = ({props, navigation}) => {
                 navigation.navigate('Home')
             }
             else {
-                navigation.reset({
-                    index: 0,
-                    routes: [{name: 'Login'}],
-                  });
-                navigation.navigate('Login')
+                 navigation.reset({
+                     index: 0,
+                     routes: [{name: 'Login'}],
+                   });
             }
         })
     }
     checkIfLoggedIn();
 
-    useEffect(()=>{
-        navigation.navigate('Login')
-    })
+    // useEffect(()=>{
+    //     navigation.navigate('Login')
+    // })
     return (
         <View style={styles.container}>
             <ActivityIndicator size="large" />
