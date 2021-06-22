@@ -12,12 +12,16 @@ import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import LoadingScreen from './screens/LoadingScreen';
+import CreateScreen from './screens/CreateScreen'
+import MapScreen from './screens/MapScreen'
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 function HomeTabs() {
   return (
     <Tab.Navigator initialRouteName = "Home">
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Create" component={CreateScreen} />
+      <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -26,6 +30,28 @@ function ProfileTabs() {
   return (
     <Tab.Navigator initialRouteName = "Profile">
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Create" component={CreateScreen} />
+      <Tab.Screen name="Map" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+}
+function CreateTabs() {
+  return (
+    <Tab.Navigator initialRouteName = "Create">
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Create" component={CreateScreen} />
+      <Tab.Screen name="Map" component={MapScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+}
+function MapTabs() {
+  return (
+    <Tab.Navigator initialRouteName = "Map">
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Create" component={CreateScreen} />
+      <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -47,6 +73,8 @@ export default function App() {
         <Stack.Screen name = "Home" component={HomeTabs} options={{headerShown: false}}/>
         <Stack.Screen name = "Profile" component={ProfileTabs} options={{headerShown: false}}/>
         <Stack.Screen name = "Loading" component={LoadingScreen} options={{headerShown: false}}/>
+        <Stack.Screen name = "Create" component={CreateTabs} options={{headerShown: false}}/>
+        <Stack.Screen name = "Map" component={MapTabs} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
