@@ -25,13 +25,14 @@ const LoadingScreen = ({props, navigation}) => {
             else {
                 navigation.reset({
                     index: 0,
-                    routes: [],
+                    routes: [{name: 'Login'}],
                   });
                 navigation.navigate('Login')
             }
         })
     }
     checkIfLoggedIn();
+    navigation.navigate('Login')
     return (
         <View style={styles.container}>
             <ActivityIndicator size="large" />
