@@ -70,7 +70,9 @@ const LoginScreen = ({props, navigation}) => {
             firebase.auth().signInWithCredential(credential).then(function(result){
                 ////console.log("user signed in")
                 props.updateCurrentUser(result)
+            
                 if(result.additionalUserInfo.isNewUser){
+                    console.log("peepoo")
                     firebase
                     .database()
                     .ref('/users/' + result.user.uid)
@@ -80,10 +82,18 @@ const LoginScreen = ({props, navigation}) => {
                         locale: result.additionalUserInfo.profile.locale,
                         first_name: result.additionalUserInfo.profile.given_name,
                         last_name: result.additionalUserInfo.profile.family_name,
-                        created_at: Date.now()
+                        created_at: Date.now(),
+                        numberEventsHosted: 0,
+                        numberEventsJoined: 0,
+                        bio: "",
+                        isAnonymous: false, // If they want to join anonymously, false by default
+                        nickname: result.additionalUserInfo.profile.given_name +" "+ result.additionalUserInfo.profile.family_name,
+                        isTopUser: false, // Kept track of by our 24/7 backend code for who makes the most events recently
+                        warnings: 0 // If people host innappropriate events and such, warning counter goes up
                     })
                 }
                 else{
+                    console.log("test")
                     firebase
                     .database()
                     .ref('/users/' + result.user.uid).update({
