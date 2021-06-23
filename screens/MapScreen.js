@@ -7,7 +7,7 @@ export default function App() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [lat, setLat] = useState(null);
-  const [long, setLong] = useState(0);
+  const [long, setLong] = useState(null);
 
   useEffect(() => {
     
@@ -38,7 +38,7 @@ export default function App() {
   }
 
   
-  if(lat){
+  if(lat && long){
     return (
       <View style={styles.container}>
         {/* <Text>{lat}</Text>
