@@ -36,167 +36,7 @@ import SignOutScreen from './screens/SignOutScreen'
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 let currentUser = ""
-/*
-function HomeTabs() {
-  return (
-    <Tab.Navigator initialRouteName = "Home" 
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused
-              ? 'home-sharp'
-              : 'home-outline';
-          }
-          else if (route.name === 'Map') {
-            iconName = focused 
-              ? 'ios-search-sharp' 
-              : 'ios-search-outline';
-          }
-          else if (route.name === 'Create') {
-            iconName = focused 
-              ? 'add-sharp' 
-              : 'add-outline';
-          }
-          else if (route.name === 'Profile') {
-            iconName = focused 
-              ? 'person-circle-sharp' 
-              : 'person-circle-outline';
-          }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })} tabBarOptions={{
-        activeTintColor: "#fc0328",
-        showLabel: false
-      }}>
-      <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
-  );
-}
-function ProfileTabs() {
-  return (
-    <Tab.Navigator initialRouteName = "Profile"
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === 'Home') {
-            iconName = focused
-              ? 'home-sharp'
-              : 'home-outline';
-          }
-          else if (route.name === 'Map') {
-            iconName = focused 
-              ? 'ios-search-sharp' 
-              : 'ios-search-outline';
-          }
-          else if (route.name === 'Create') {
-            iconName = focused 
-              ? 'add-sharp' 
-              : 'add-outline';
-          }
-          else if (route.name === 'Profile') {
-            iconName = focused 
-              ? 'person-circle-sharp' 
-              : 'person-circle-outline';
-          }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}>
-      <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
-  );
-}
-function CreateTabs() {
-  return (
-    <Tab.Navigator initialRouteName = "Create"
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === 'Home') {
-            iconName = focused
-              ? 'home-sharp'
-              : 'home-outline';
-          }
-          else if (route.name === 'Map') {
-            iconName = focused 
-              ? 'ios-search-sharp' 
-              : 'ios-search-outline';
-          }
-          else if (route.name === 'Create') {
-            iconName = focused 
-              ? 'ios-add-sharp' 
-              : 'ios-add-outline';
-          }
-          else if (route.name === 'Profile') {
-            iconName = focused 
-              ? 'person-circle-sharp' 
-              : 'person-circle-outline';
-          }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}>
-      <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
-  );
-}
-function MapTabs() {
-  return (
-    <Tab.Navigator initialRouteName = "Map"
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === 'Home') {
-            iconName = focused
-              ? 'home-sharp'
-              : 'home-outline';
-          }
-          else if (route.name === 'Map') {
-            iconName = focused 
-              ? 'ios-search-sharp' 
-              : 'ios-search-outline';
-          }
-          else if (route.name === 'Create') {
-            iconName = focused 
-              ? 'add-sharp' 
-              : 'add-outline';
-          }
-          else if (route.name === 'Profile') {
-            iconName = focused 
-              ? 'person-circle-sharp' 
-              : 'person-circle-outline';
-          }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}>
-      <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
-  );
-}
-*/
 const navOptionHandler = () => ({
   headerShown: false
 })
@@ -321,11 +161,6 @@ function HomeScreenStack(navigation) {
   );
 }
 
-// function OpenDrawer(){
-//   return()
-//   const navigations = useNavigation();
-//     navigations.openDrawer();
-// }
 const CustomButton = ({ children, onPress }) => (
   <TouchableOpacity
     style={{
@@ -415,38 +250,6 @@ function TabNavigator() {
   )
 } 
 
-{/*function temp({navigation}){
-    return(
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{height: 150, alignItems: 'center', justifyContent: 'center'}}>
-          {/* <Image source={IMAGE.ICON_PROFILE}
-          style={{height: 120, width: 120, borderRadius:60}}
-    /> }
-      </View>
-      <ScrollView style={{marginLeft: 5}}>
-          <TouchableOpacity
-          style={{marginTop: 20}}
-          onPress={() => navigation.navigate('MenuTab')}
-          >
-          <Text>Menu Tab</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-          style={{marginTop: 20}}
-          onPress={() => navigation.navigate('Notifications')}
-          >
-          <Text>Notifications</Text>
-          </TouchableOpacity>
-      </ScrollView>
-
-          <TouchableOpacity
-          style={{marginTop: 20, marginLeft: 5}}
-          onPress={() => navigation.navigate('Login')}
-          >
-          <Text>Logout</Text>
-          </TouchableOpacity>
-      </SafeAreaView>)};
-        */}
-
 
 
 function FirstItem({ navigation }) {
@@ -497,14 +300,6 @@ const CustomDrawerContent = (props) => {
         drawerLabel: ()=>null}}
           />
         <Stack.Screen name = "Loading" component={LoadingScreen} options={{headerShown: false,gestureEnabled: false}}/>
-        {/*<Drawer.Screen name = "Register" component={DrawerNavigator} options={{headerShown: false}}/>
-        <Drawer.Screen name = "Login"  component={LoginScreen} options={{headerShown: false}}/>
-        <Drawer.Screen name = "HomeApp" component={DrawerNavigator} options={{headerShown: false}}/>
-        <Drawer.Screen name = "Loading" component={LoadingScreen} options={{headerShown: false,gestureEnabled: false}}/> */}
-        {/* <Stack.Screen name = "Profile" component={ProfileTabs} options={{headerShown: false}}/>
-        <Stack.Screen name = "Loading" component={LoadingScreen} options={{headerShown: false,gestureEnabled: false}}/>
-        <Stack.Screen name = "Create" component={CreateTabs} options={{headerShown: false}}/>
-        <Stack.Screen name = "Map" component={MapTabs} options={{headerShown: false}}/> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );

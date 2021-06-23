@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 export default function App() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [lat, setLat] = useState(0);
+  const [lat, setLat] = useState(null);
   const [long, setLong] = useState(0);
 
   useEffect(() => {
@@ -37,30 +37,25 @@ export default function App() {
     
   }
 
-  if (lat == null) {
-      return null
+  
+  if(lat){
+    return (
+      <View style={styles.container}>
+        {/* <Text>{lat}</Text>
+        <Text>{long}</Text> */}
+        <MapView style={styles.map} 
+        initialRegion={{
+        latitude: lat,
+        longitude: long,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }} />
+      </View>
+    );
   }
   else{
-  return (
-    
-    <View style={styles.container}>
-      {/* <Text>{lat}</Text>
-      <Text>{long}</Text> */}
-      
-      
-      
-      <MapView style={styles.map} 
-      
-      initialRegion={{
-      latitude: lat,
-      longitude: long,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    }} />
-   
-    </View>
-  );
- }
+    return(<View></View>)
+  }
 }
 
 const styles = StyleSheet.create({
