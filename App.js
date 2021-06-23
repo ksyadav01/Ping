@@ -90,12 +90,15 @@ function CreateScreenStack({navigation, route}) {
     >
       
       <StackCreate.Screen name="Create" component={CreateScreen}
-        options={({ navigation })=> ({ title: 'Ping',
-          headerRight : ()=>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <Ionicons name={"add-sharp"} color="white" size={20}/>
-            </TouchableOpacity>
-          })} />
+        options={({ navigation })=> ({ title: 'Ping', color: "white",
+        headerTitleStyle:{
+          color: "white"
+        },
+        headerRight : ()=>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Ionicons name={"menu-outline"} color="white" size={35}/>
+          </TouchableOpacity>
+        })} />
       {/* <HomeStack.Screen name="Png" component={ShowDrawer} /> */}
     </StackCreate.Navigator>
   );
@@ -118,12 +121,15 @@ function MapScreenStack({navigation, route}) {
     >
       
       <StackMap.Screen name="Map" component={MapScreen}
-        options={({ navigation })=> ({ title: 'Ping',
-          headerRight : ()=>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <Ionicons name={"add-sharp"} color="white" size={20}/>
-            </TouchableOpacity>
-          })} />
+        options={({ navigation })=> ({ title: 'Ping', color: "white",
+        headerTitleStyle:{
+          color: "white"
+        },
+        headerRight : ()=>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Ionicons name={"menu-outline"} color="white" size={35}/>
+          </TouchableOpacity>
+        })} />
       {/* <HomeStack.Screen name="Png" component={ShowDrawer} /> */}
     </StackMap.Navigator>
   );
@@ -251,26 +257,6 @@ function TabNavigator() {
 } 
 
 
-
-function FirstItem({ navigation }) {
-  return (
-    <View style={{ margin: 60 }}>
-      <Text style={{ fontSize: 24 }}>This is First Item screen</Text>
-      <Button
-        title="Open Drawer"
-        onPress={() => {
-          navigation.openDrawer();
-        }}
-      />
-      <Button
-        title="Go to Second Item"
-        onPress={() => {
-          navigation.navigate("Home");
-        }}
-      />
-    </View>
-  );
-}
 export default function App() {
 const CustomDrawerContent = (props) => {
   const { state, ...rest } = props;
