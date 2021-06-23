@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
+import { Platform, Text, View, StyleSheet, Dimensions } from 'react-native';
+import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
 
 export default function App() {
