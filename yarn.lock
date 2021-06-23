@@ -1144,6 +1144,11 @@
   resolved "https://registry.npmjs.org/@expo-google-fonts/dev/-/dev-0.1.0.tgz"
   integrity sha512-OiKO8z9rauIlWHGSJgbGyklbRJ07vEqhqM2rdcPy4LO98KEeFcpwV2cSHLrL3VFdWM/tpVQHYKDZVtwg+nDywQ==
 
+"@expo-google-fonts/pt-sans@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/pt-sans/-/pt-sans-0.1.0.tgz#2c1ea43b521a3997c9a54a3b284744f8038714d7"
+  integrity sha512-img46y5m9K9jA1j/CoNblMtBOuNdl1m0LyraJKa+o0Re1kjp2qgNto9mwYruBV0g8fTLjndUaHl1Hp/UwtFEzA==
+
 "@expo/config-plugins@1.0.33", "@expo/config-plugins@^1.0.18":
   version "1.0.33"
   resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-1.0.33.tgz"
@@ -2164,6 +2169,14 @@
     nanoid "^3.1.15"
     query-string "^6.13.6"
     react-is "^16.13.0"
+
+"@react-navigation/drawer@^5.12.5":
+  version "5.12.5"
+  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-5.12.5.tgz#463bd33b29bfcefaa474207b50c2bd3bac6dae79"
+  integrity sha512-WMfz/tKg/K7QBb5rhjXW/pho4zXh3OoHXnHETk5SuVzHlDPM7r84uvAeC5l+ySp5jmipLrJn3zL+kfv9+KKHZQ==
+  dependencies:
+    color "^3.1.3"
+    react-native-iphone-x-helper "^1.3.0"
 
 "@react-navigation/native@^3.8.4":
   version "3.8.4"

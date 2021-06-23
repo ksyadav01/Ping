@@ -11,23 +11,33 @@ import {Text,
     TouchableOpacity} from 'react-native'
 import {
     useFonts,
-    Roboto_400Regular,
-    Oswald_400Regular,
-    OpenSans_400Regular,
-    Oswald_200ExtraLight
-  } from "@expo-google-fonts/dev";
+    PTSans_400Regular
+} from "@expo-google-fonts/pt-sans";
 import { ActivityIndicator } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase'
+import app from "../firebase/config"
 import { useEffect } from 'react/cjs/react.production.min';
 const ProfileScreen = ({props, navigation}) => {
     
     let [fontsLoaded] = useFonts({
-        Oswald_400Regular
+        PTSans_400Regular
     });
+    let name = ""
+    let pic = ""
+    let email = ""
 
-    if (fontsLoaded){
+    const user = firebase.auth().currentUser
+    if(user !== null) {
+        name = user.displayName;
+        pic = user.photoURL;
+        email = user.email;
+        console.log(pic)
+    }
+
+
+    if(fontsLoaded) {
         return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -35,12 +45,14 @@ const ProfileScreen = ({props, navigation}) => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <SafeAreaView>
             
-            <StatusBar style="dark" />
-            <View style={styles.container}>
-                <Text>Profile Screen</Text>
-                <Button title="Sign out" onPress={()=>firebase.auth().signOut()}></Button>
-            </View>
-        </SafeAreaView>
+                <StatusBar  />
+                <View style={styles.container}>
+                    <Image style={styles.pic} source={{uri: pic}}></Image>
+                    <Text style={styles.name}>{name}</Text>
+                    <Text>{email}</Text>
+                    <Button title="Sign out" onPress={()=>firebase.auth().signOut()}></Button>
+                </View>
+            </SafeAreaView>
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
         
@@ -59,7 +71,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "center"
+        backgroundColor: "white"
+    }, pic: {
+        width: 200,
+        height: 200,
+        borderWidth: 5,
+        borderColor: "#fc0328",
+        borderRadius: 200,
+        marginTop: "40%"
+    }, name: {
+        fontSize: 40,
+        fontFamily: "PTSans_400Regular",
+        marginTop: 10
     }
 
 
