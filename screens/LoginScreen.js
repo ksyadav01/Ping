@@ -128,7 +128,8 @@ const LoginScreen = ({props, navigation}) => {
       }
 
     
-
+     navigationOptions={
+        drawerLabel:()=> null,};
     if (fontsLoaded){
         return (
         <KeyboardAvoidingView
