@@ -17,6 +17,7 @@ import CreateScreen from './screens/CreateScreen'
 import MapScreen from './screens/MapScreen'
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+let currentUser = ""
 function HomeTabs() {
   return (
     <Tab.Navigator initialRouteName = "Home" 
@@ -176,6 +177,10 @@ function MapTabs() {
     </Tab.Navigator>
   );
 }
+function UpdateCurrentUser(value){
+  currentUser = value
+  console.log("does it work i hope so")
+}
 export default function App() {
   // checkIfLoggedIn = () => {
   //   firebase.auth().onAuthStateChanged(function(user){
@@ -189,7 +194,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName = "Loading">
         <Stack.Screen name = "Register" navigator={Stack} component={RegisterScreen} options={{headerShown: false}}/>
-        <Stack.Screen name = "Login" navigator={Stack} component={LoginScreen} options={{headerShown: false}}/>
+        <Stack.Screen name = "Login" navigator={Stack} updateCurrentUser={UpdateCurrentUser} component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name = "Home" component={HomeTabs} options={{headerShown: false}}/>
         <Stack.Screen name = "Profile" component={ProfileTabs} options={{headerShown: false}}/>
         <Stack.Screen name = "Loading" component={LoadingScreen} options={{headerShown: false,gestureEnabled: false}}/>

@@ -53,7 +53,7 @@ const LoginScreen = ({props, navigation}) => {
 
 
     onSignIn = (googleUser) =>{
-        console.log('Google Auth Response', googleUser);
+        ////console.log('Google Auth Response', googleUser);
         // We need to register an Observer on Firebase Auth to make sure auth is initialized.
         var unsubscribe = firebase.auth().onAuthStateChanged(function (firebaseUser) {
           unsubscribe();
@@ -68,7 +68,8 @@ const LoginScreen = ({props, navigation}) => {
       
             // Sign in with credential from the Google user.
             firebase.auth().signInWithCredential(credential).then(function(result){
-                console.log("user signed in")
+                ////console.log("user signed in")
+                props.updateCurrentUser(result)
                 if(result.additionalUserInfo.isNewUser){
                     firebase
                     .database()
@@ -100,7 +101,7 @@ const LoginScreen = ({props, navigation}) => {
               // ...
             });
           } else {
-            console.log('User already signed-in Firebase.');
+            ////console.log('User already signed-in Firebase.');
           }
         }.bind(this));
     }
@@ -116,7 +117,7 @@ const LoginScreen = ({props, navigation}) => {
           if (result.type === 'success') {
             this.onSignIn(result)
             //setName(result.name)
-            console.log(result)
+            ////console.log(result)
             return result.accessToken;
           } else {
             return { cancelled: true };
