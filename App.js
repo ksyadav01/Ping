@@ -4,8 +4,7 @@ import { NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createAppContainer,createSwitchNavigator } from 'react-navigation';
-import { Entypo } from '@expo/vector-icons'; // Location icon: location-pin, Search icon: magnifying-glass
-import { AntDesign } from '@expo/vector-icons'; // Plus icon: plussquareo
+import { Ionicons } from '@expo/vector-icons';
 //Screens
 
 import {firebase} from './firebase/config'
@@ -20,7 +19,39 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 function HomeTabs() {
   return (
-    <Tab.Navigator initialRouteName = "Home">
+    <Tab.Navigator initialRouteName = "Home" 
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused
+              ? 'home-sharp'
+              : 'home-outline';
+          }
+          else if (route.name === 'Map') {
+            iconName = focused 
+              ? 'ios-search-sharp' 
+              : 'ios-search-outline';
+          }
+          else if (route.name === 'Create') {
+            iconName = focused 
+              ? 'add-sharp' 
+              : 'add-outline';
+          }
+          else if (route.name === 'Profile') {
+            iconName = focused 
+              ? 'person-circle-sharp' 
+              : 'person-circle-outline';
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })} tabBarOptions={{
+        activeTintColor: "#fc0328",
+        showLabel: false
+      }}>
       <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
@@ -30,7 +61,36 @@ function HomeTabs() {
 }
 function ProfileTabs() {
   return (
-    <Tab.Navigator initialRouteName = "Profile">
+    <Tab.Navigator initialRouteName = "Profile"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused
+              ? 'home-sharp'
+              : 'home-outline';
+          }
+          else if (route.name === 'Map') {
+            iconName = focused 
+              ? 'ios-search-sharp' 
+              : 'ios-search-outline';
+          }
+          else if (route.name === 'Create') {
+            iconName = focused 
+              ? 'add-sharp' 
+              : 'add-outline';
+          }
+          else if (route.name === 'Profile') {
+            iconName = focused 
+              ? 'person-circle-sharp' 
+              : 'person-circle-outline';
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}>
       <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
@@ -40,7 +100,36 @@ function ProfileTabs() {
 }
 function CreateTabs() {
   return (
-    <Tab.Navigator initialRouteName = "Create">
+    <Tab.Navigator initialRouteName = "Create"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused
+              ? 'home-sharp'
+              : 'home-outline';
+          }
+          else if (route.name === 'Map') {
+            iconName = focused 
+              ? 'ios-search-sharp' 
+              : 'ios-search-outline';
+          }
+          else if (route.name === 'Create') {
+            iconName = focused 
+              ? 'ios-add-sharp' 
+              : 'ios-add-outline';
+          }
+          else if (route.name === 'Profile') {
+            iconName = focused 
+              ? 'person-circle-sharp' 
+              : 'person-circle-outline';
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}>
       <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
@@ -50,7 +139,36 @@ function CreateTabs() {
 }
 function MapTabs() {
   return (
-    <Tab.Navigator initialRouteName = "Map">
+    <Tab.Navigator initialRouteName = "Map"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused
+              ? 'home-sharp'
+              : 'home-outline';
+          }
+          else if (route.name === 'Map') {
+            iconName = focused 
+              ? 'ios-search-sharp' 
+              : 'ios-search-outline';
+          }
+          else if (route.name === 'Create') {
+            iconName = focused 
+              ? 'add-sharp' 
+              : 'add-outline';
+          }
+          else if (route.name === 'Profile') {
+            iconName = focused 
+              ? 'person-circle-sharp' 
+              : 'person-circle-outline';
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}>
       <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
