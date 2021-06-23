@@ -37,8 +37,10 @@ export default function App() {
     
   }
 
-  
-
+  if (lat == null) {
+      return null
+  }
+  else{
   return (
     
     <View style={styles.container}>
@@ -58,6 +60,7 @@ export default function App() {
    
     </View>
   );
+ }
 }
 
 const styles = StyleSheet.create({
