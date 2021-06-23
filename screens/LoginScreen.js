@@ -53,7 +53,7 @@ const LoginScreen = ({props, navigation}) => {
 
 
     onSignIn = (googleUser) =>{
-        ////console.log('Google Auth Response', googleUser);
+        //console.log('Google Auth Response', googleUser);
         // We need to register an Observer on Firebase Auth to make sure auth is initialized.
         var unsubscribe = firebase.auth().onAuthStateChanged(function (firebaseUser) {
           unsubscribe();
@@ -68,11 +68,10 @@ const LoginScreen = ({props, navigation}) => {
       
             // Sign in with credential from the Google user.
             firebase.auth().signInWithCredential(credential).then(function(result){
-                ////console.log("user signed in")
-                props.updateCurrentUser(result)
+                console.log("user signed in")
+                //props.updateCurrentUser(result)
             
                 if(result.additionalUserInfo.isNewUser){
-                    console.log("peepoo")
                     firebase
                     .database()
                     .ref('/users/' + result.user.uid)
@@ -93,7 +92,6 @@ const LoginScreen = ({props, navigation}) => {
                     })
                 }
                 else{
-                    console.log("test")
                     firebase
                     .database()
                     .ref('/users/' + result.user.uid).update({
@@ -138,8 +136,6 @@ const LoginScreen = ({props, navigation}) => {
       }
 
     
-     navigationOptions={
-        drawerLabel:()=> null,};
     if (fontsLoaded){
         return (
         <KeyboardAvoidingView
