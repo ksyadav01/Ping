@@ -89,7 +89,7 @@ const LoginScreen = ({props, navigation}) => {
                         is_top_user: false, // Kept track of by our 24/7 backend code for who makes the most events recently
                         warnings: 0 // If people host innappropriate events and such, warning counter goes up
                     }
-                    UsersRef.add(user).then(()=>{
+                    UsersRef.doc(result.user.uid).set(user).then(()=>{
                         console.log("added the user to the database")
                     })
                     // firebase

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {Text,
     View,
     Button,
@@ -18,23 +18,49 @@ import { ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase'
 import app from "../firebase/config"
-import { useEffect } from 'react/cjs/react.production.min';
+import { UsersRef } from '../firebase/config';
+
 const ProfileScreen = ({props, navigation}) => {
+    //const [userData, setUserData] = useState(''); // Contains all the data of user in array format
+    //Storage order:
+    const [name, setName] = useState('');
+    const [pic, setPic] = useState('');
+    const [email, setEmail] = useState('');
+    let userData = new Map()
     
     let [fontsLoaded] = useFonts({
         PTSans_400Regular
     });
-    let name = ""
-    let pic = ""
-    let email = ""
-    let uid = ""
-    const user = firebase.auth().currentUser
-    if(user !== null) {
-        name = user.displayName;
-        pic = user.photoURL;
-        email = user.email;
-        console.log(pic)
-    }
+    //const user =  firebase.auth().currentUser
+    useEffect(function effectFunction() {
+        async function fetchUsers() {
+          const user = firebase.auth().currentUser
+          var userRef = UsersRef.doc(user.uid);
+          try {
+            var doc = await userRef.get();
+            const data = await doc.data();
+            let counter = 0;
+            let dataVals = Object.values(data);
+            let keys = Object.keys(data)
+            keys.forEach((key)=>{
+                userData.set(key, dataVals[counter])
+                counter = counter +1;
+            })
+          } catch (error) {
+            console.log("retrieving error")
+          }
+        }
+    
+    // Defining what sequence of the async get() functions - check out mozilla article
+        async function sequentialStart() {
+          await fetchUsers();
+          await setName(userData.get('nickname'))
+          await setPic(userData.get('profile_picture'))
+          await setEmail(userData.get('gmail'))
+        }
+    
+        sequentialStart();
+      }, []);
 
 
     if(fontsLoaded) {
