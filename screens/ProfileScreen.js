@@ -27,7 +27,7 @@ const ProfileScreen = ({props, navigation}) => {
     let name = ""
     let pic = ""
     let email = ""
-
+    let uid = ""
     const user = firebase.auth().currentUser
     if(user !== null) {
         name = user.displayName;
@@ -50,6 +50,7 @@ const ProfileScreen = ({props, navigation}) => {
                     <Image style={styles.pic} source={{uri: pic}}></Image>
                     <Text style={styles.name}>{name}</Text>
                     <Text>{email}</Text>
+
                     <Button title="Sign out" onPress={()=>firebase.auth().signOut()}></Button>
                 </View>
             </SafeAreaView>

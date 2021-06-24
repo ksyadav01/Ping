@@ -25,6 +25,7 @@ import logo from "../assets/Logo.png"
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect } from 'react/cjs/react.production.min';
 import firebase from 'firebase'
+import { UsersRef } from '../firebase/config';
 const LoginScreen = ({props, navigation}) => {
     
 
@@ -72,31 +73,53 @@ const LoginScreen = ({props, navigation}) => {
                 //props.updateCurrentUser(result)
             
                 if(result.additionalUserInfo.isNewUser){
-                    firebase
-                    .database()
-                    .ref('/users/' + result.user.uid)
-                    .set({
+                    let user = {
                         gmail: result.user.email,
                         profile_picture: result.additionalUserInfo.profile.picture,
                         locale: result.additionalUserInfo.profile.locale,
                         first_name: result.additionalUserInfo.profile.given_name,
                         last_name: result.additionalUserInfo.profile.family_name,
                         created_at: Date.now(),
-                        numberEventsHosted: 0,
-                        numberEventsJoined: 0,
+                        last_logged_in: 0,
+                        number_events_hosted: 0,
+                        number_events_joined: 0,
                         bio: "",
-                        isAnonymous: false, // If they want to join anonymously, false by default
+                        is_anonymous: false, // If they want to join anonymously, false by default
                         nickname: result.additionalUserInfo.profile.given_name +" "+ result.additionalUserInfo.profile.family_name,
-                        isTopUser: false, // Kept track of by our 24/7 backend code for who makes the most events recently
+                        is_top_user: false, // Kept track of by our 24/7 backend code for who makes the most events recently
                         warnings: 0 // If people host innappropriate events and such, warning counter goes up
+                    }
+                    UsersRef.add(user).then(()=>{
+                        console.log("added the user to the database")
                     })
+                    // firebase
+                    // .database()
+                    // .ref('/users/' + result.user.uid)
+                    // .set({
+                    //     gmail: result.user.email,
+                    //     profile_picture: result.additionalUserInfo.profile.picture,
+                    //     locale: result.additionalUserInfo.profile.locale,
+                    //     first_name: result.additionalUserInfo.profile.given_name,
+                    //     last_name: result.additionalUserInfo.profile.family_name,
+                    //     created_at: Date.now(),
+                    //     number_events_hosted: 0,
+                    //     number_events_joined: 0,
+                    //     bio: "",
+                    //     is_anonymous: false, // If they want to join anonymously, false by default
+                    //     nickname: result.additionalUserInfo.profile.given_name +" "+ result.additionalUserInfo.profile.family_name,
+                    //     is_top_user: false, // Kept track of by our 24/7 backend code for who makes the most events recently
+                    //     warnings: 0 // If people host innappropriate events and such, warning counter goes up
+                    // })
                 }
                 else{
-                    firebase
-                    .database()
-                    .ref('/users/' + result.user.uid).update({
+                    UsersRef.doc(result.user.uid).set({
                         last_logged_in: Date.now()
                     })
+                    // firebase
+                    // .database()
+                    // .ref('/users/' + result.user.uid).update({
+                    //     last_logged_in: Date.now()
+                    // })
                 }
             }).catch((error) => {
               // Handle Errors here.

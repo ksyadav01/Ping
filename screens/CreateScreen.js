@@ -11,34 +11,35 @@ import {Text,
     TouchableOpacity} from 'react-native'
 import {
     useFonts,
-    Roboto_400Regular,
-    Oswald_400Regular,
-    OpenSans_400Regular,
-    Oswald_200ExtraLight
+    PTSans_400Regular
   } from "@expo-google-fonts/dev";
 import { ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase'
+import * as ImagePicker from 'expo-image-picker';
 import { useEffect } from 'react/cjs/react.production.min';
 const CreateScreen = ({props, navigation}) => {
-    
+    //const [image, setImage] = useState(null);
+
     let [fontsLoaded] = useFonts({
-        Oswald_400Regular
+        PTSans_400Regular
     });
 
     if (fontsLoaded){
         return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <SafeAreaView>
             
             <StatusBar style="dark" />
             <View style={styles.container}>
-                <Text>Create Screen</Text>
-                <Button title="Sign out" onPress={()=>firebase.auth().signOut()}></Button>
+                <Text style={styles.CreateEvent}>Create An Event</Text>
+
+
+
             </View>
+
+
         </SafeAreaView>
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -58,7 +59,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "center"
+    },
+    CreateEvent:{
+        fontSize: 45,
+        fontFamily: "PTSans_400Regular",
+        marginTop: "5%"
     }
 
 

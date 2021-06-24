@@ -228,9 +228,9 @@ function TabNavigator() {
           style:{
             elevation: 0,
             position: "absolute",
-            left: 10,
-            right: 10,
-            bottom:25,
+            //left: 10,
+            //right: 10,
+            //bottom:25,
             height: 75,
             borderRadius: 15,
             backgroundColor: "#F7F6F6"
@@ -276,7 +276,7 @@ const CustomDrawerContent = (props) => {
 };
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName = "Loading" drawerPosition = "right" 
+      <Drawer.Navigator initialRouteName = "Loading" //drawerPosition = "right" 
         drawerContent={(props) => <CustomDrawerContent {...props} />}>
         <Drawer.Screen name = "Home" component={TabNavigator} options={{headerShown: false}}/>
         <Drawer.Screen name = "Settings" component={SettingScreen} options={{headerShown: false}}/>
