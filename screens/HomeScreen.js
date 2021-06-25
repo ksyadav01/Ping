@@ -20,6 +20,7 @@ import { ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase'
 import { useEffect } from 'react/cjs/react.production.min';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 const HomeScreen = ({props, navigation}) => {
     
     let [fontsLoaded] = useFonts({

@@ -31,6 +31,7 @@ import SettingScreen from './screens/SettingScreen'
 import CreateScreen from './screens/CreateScreen'
 import MapScreen from './screens/MapScreen'
 import SignOutScreen from './screens/SignOutScreen'
+import DrawerContent  from './screens/DrawerContent';
 
 
 const Stack = createStackNavigator();
@@ -277,7 +278,7 @@ const CustomDrawerContent = (props) => {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName = "Loading" //drawerPosition = "right" 
-        drawerContent={(props) => <CustomDrawerContent {...props} />}>
+        drawerContent={(props) => <DrawerContent {...props} />}>
         <Drawer.Screen name = "Home" component={TabNavigator} options={{headerShown: false}}/>
         <Drawer.Screen name = "Settings" component={SettingScreen} options={{headerShown: false}}/>
         <Drawer.Screen name = "SignOut" component={SignOutScreen} options={{headerShown: false}}/>

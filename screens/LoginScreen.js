@@ -112,8 +112,8 @@ const LoginScreen = ({props, navigation}) => {
                     // })
                 }
                 else{
-                    UsersRef.doc(result.user.uid).set({
-                        last_logged_in: Date.now()
+                    UsersRef.doc(result.user.uid).update({
+                        "last_logged_in": Date.now()
                     })
                     // firebase
                     // .database()
