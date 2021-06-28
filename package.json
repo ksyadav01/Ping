@@ -40,6 +40,7 @@
     "react-native-modal-dropdown": "https://github.com/siemiatj/react-native-modal-dropdown",
     "react-native-paper": "^4.9.2",
     "react-native-reanimated": "~2.1.0",
+    "react-native-responsive-fontsize": "^0.5.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
     "react-native-smtp-mailer": "^1.2.4",
