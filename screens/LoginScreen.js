@@ -168,7 +168,7 @@ const LoginScreen = ({props, navigation}) => {
             <SafeAreaView>
             
             <StatusBar style="dark" />
-            <KeyboardAvoidingView style={styles.test}>
+           
                     <Text style={styles.welcome}>
                         Welcome,
                     </Text>
@@ -229,7 +229,7 @@ const LoginScreen = ({props, navigation}) => {
                             
                         </Text>
                     </View>
-            </KeyboardAvoidingView>
+            
         </SafeAreaView>
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
