@@ -1,23 +1,22 @@
-// @ts-nocheck
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, Platform,Keyboard, Text, TouchableOpacity, View, TextInput, KeyboardAvoidingView, 
   TouchableWithoutFeedback, SafeAreaView} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { RFPercentage } from 'react-native-responsive-fontsize';
-import EStyleSheet from 'react-native-extended-stylesheet';
+
 
 import ModalDropdown from 'react-native-modal-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
-import HeaderComponent from '../components/HeaderComponent';
-import GradientButton from '../components/GradientButton';
 
 
 
-export default function CreateProfileScreen() {
-  let [selectedImage, setSelectedImage] = React.useState<any | null>(null);
-  const [name, setName] = React.useState<any | null>(null);
-  const [birthDate, setBirthDate] = React.useState<any | null>(null);
-  const [gender, setGender] = React.useState<any | null>(null);
+
+
+export default function ProfileScreen() {
+  let [selectedImage, setSelectedImage] = useState(null);
+  const [name, setName] = useState(null);
+  const [birthDate, setBirthDate] = useState(null);
+  const [gender, setGender] = useState(null);
  
 
   let openImagePickerAsync = async () => {
@@ -52,7 +51,6 @@ export default function CreateProfileScreen() {
 
   return (
     <View style={styles.container1}>
-      <HeaderComponent/>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
         // behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -91,18 +89,14 @@ export default function CreateProfileScreen() {
             defaultValue = {"Select your gender"} 
             options={['Male', 'Female','Other']}/>
           </View>
-          <View style={styles.footer}>
-            <View style={{width:100, height:50, borderRadius:50}}>
-              <GradientButton text="->" onPress={()=>{console.log("next")}}/>
-            </View>
-          </View>
+    
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </View>
   );
 }
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: 'gray',
