@@ -16,6 +16,8 @@ const firebaseConfig = {
 // }
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(app)
+const storageRef = firebase.storage().ref();
 
 export const UsersRef = db.collection("users")
+export const picStorage = storageRef
 export { firebase };

@@ -15,6 +15,8 @@ import {
 } from "@expo-google-fonts/pt-sans";
 import { ActivityIndicator } from 'react-native';
 
+import { useIsFocused } from '@react-navigation/native';
+
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase'
 import app from "../firebase/config"
@@ -26,6 +28,7 @@ const ProfileScreen = ({props, navigation}) => {
     const [name, setName] = useState('');
     const [pic, setPic] = useState('');
     const [email, setEmail] = useState('');
+    const isFocused = useIsFocused();
     let userData = new Map()
     
     let [fontsLoaded] = useFonts({
@@ -60,7 +63,7 @@ const ProfileScreen = ({props, navigation}) => {
         }
     
         sequentialStart();
-      }, []);
+      }, [isFocused]);
 
 
     if(fontsLoaded) {
@@ -77,7 +80,7 @@ const ProfileScreen = ({props, navigation}) => {
                     <Text style={styles.name}>{name}</Text>
                     <Text>{email}</Text>
 
-                    <Button title="Sign out" onPress={()=>firebase.auth().signOut()}></Button>
+                    <Button title="Edit Profile" onPress={()=>navigation.navigate("CreateProfileScreen")}></Button>
                 </View>
             </SafeAreaView>
         </TouchableWithoutFeedback>

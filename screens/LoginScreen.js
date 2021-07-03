@@ -34,6 +34,8 @@ const LoginScreen = ({props, navigation}) => {
     const [loginHover, setLoginHoverColor] 	= React.useState(false);
     const [pswdHover, setPwdHoverColor] 	= React.useState(false);
     const [name, setName] = React.useState("");
+    let firstLogin = false;
+    
     let [fontsLoaded] = useFonts({
         Oswald_400Regular
     });
@@ -85,12 +87,16 @@ const LoginScreen = ({props, navigation}) => {
                         number_events_joined: 0,
                         bio: "",
                         is_anonymous: false, // If they want to join anonymously, false by default
-                        nickname: result.additionalUserInfo.profile.given_name +" "+ result.additionalUserInfo.profile.family_name,
+                        full_name: result.additionalUserInfo.profile.given_name +" "+ result.additionalUserInfo.profile.family_name,
+                        nickname: "", // Name set by user in create/edit profile screen
+                        date_of_birth: "",
+                        gender: "",
                         is_top_user: false, // Kept track of by our 24/7 backend code for who makes the most events recently
                         warnings: 0 // If people host innappropriate events and such, warning counter goes up
                     }
                     UsersRef.doc(result.user.uid).set(user).then(()=>{
                         console.log("added the user to the database")
+                        navigation.navigate("CreateProfileScreen")
                     })
                     // firebase
                     // .database()

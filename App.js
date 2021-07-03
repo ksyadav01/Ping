@@ -32,6 +32,8 @@ import CreateScreen from './screens/CreateScreen'
 import MapScreen from './screens/MapScreen'
 import SignOutScreen from './screens/SignOutScreen'
 import DrawerContent  from './screens/DrawerContent';
+import CreateProfileScreen  from './screens/CreateProfileScreen';
+import EditProfileScreen  from './screens/EditProfileScreen';
 
 
 const Stack = createStackNavigator();
@@ -54,10 +56,7 @@ function ProfileScreenStack({navigation, route}) {
         headerStyle: {
           backgroundColor: "#fc0328",
           height: 75
-        },}}
-      
-      
-    >
+        },}}>
       
       <StackProfile.Screen name="Profile" component={ProfileScreen}
         options={({ navigation })=> ({ title: 'Ping', color: "white",
@@ -85,11 +84,8 @@ function CreateScreenStack({navigation, route}) {
         headerStyle: {
           backgroundColor: "#fc0328",
           height: 75
-        },}}
-      
-      
-    >
-      
+        },}}>
+
       <StackCreate.Screen name="Create" component={CreateScreen}
         options={({ navigation })=> ({ title: 'Ping', color: "white",
         headerTitleStyle:{
@@ -116,10 +112,7 @@ function MapScreenStack({navigation, route}) {
         headerStyle: {
           backgroundColor: "#fc0328",
           height: 75
-        },}}
-      
-      
-    >
+        },}}>
       
       <StackMap.Screen name="Map" component={MapScreen}
         options={({ navigation })=> ({ title: 'Ping', color: "white",
@@ -283,10 +276,12 @@ const CustomDrawerContent = (props) => {
         <Drawer.Screen name = "Settings" component={SettingScreen} options={{headerShown: false}}/>
         <Drawer.Screen name = "SignOut" component={SignOutScreen} options={{headerShown: false}}/>
         <Drawer.Screen name = "Login"  component={LoginScreen} options={{
-          headerShown: false,
-        drawerLabel: ()=>null}}
-          />
+          headerShown: false, 
+          drawerLabel: ()=>null}} />
         <Stack.Screen name = "Loading" component={LoadingScreen} options={{headerShown: false,gestureEnabled: false}}/>
+        <Stack.Screen name = "CreateProfileScreen" component={CreateProfileScreen} options={{headerShown: false,gestureEnabled: false}} />
+        <Stack.Screen name = "EditProfileScreen" component={EditProfileScreen} options={{headerShown: false,gestureEnabled: false}} />
+        <Stack.Screen name = "ProfileScreen" component={ProfileScreenStack}  />
       </Drawer.Navigator>
     </NavigationContainer>
   );

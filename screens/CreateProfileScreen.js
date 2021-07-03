@@ -1,29 +1,94 @@
-import React, { useState, useEffect } from 'react';
-import { Image, StyleSheet, Platform,Keyboard, Text, TouchableOpacity, View, TextInput, KeyboardAvoidingView, 
-  TouchableWithoutFeedback, SafeAreaView} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import { RFPercentage } from 'react-native-responsive-fontsize';
+import React, { useState, useEffect } from "react";
+import {
+  Image,
+  Switch,
+  StyleSheet,
+  Platform,
+  Keyboard,
+  Text,
+  TouchableOpacity,
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  SafeAreaView,
+  ImageBackground,
+} from "react-native";
 
+import { LinearGradient } from "expo-linear-gradient";
+import * as ImagePicker from "expo-image-picker";
+import { RFPercentage } from "react-native-responsive-fontsize";
+import storage from "@react-native-firebase/storage";
+import firebase from "firebase";
 
-import ModalDropdown from 'react-native-modal-dropdown';
-import { TextInputMask } from 'react-native-masked-text';
+import ModalDropdown from "react-native-modal-dropdown";
+import { Ionicons } from '@expo/vector-icons'; 
+import { TextInputMask } from "react-native-masked-text";
+import { UsersRef } from "../firebase/config";
+import { picStorage } from "../firebase/config";
+import { useFonts, PTSans_400Regular } from "@expo-google-fonts/pt-sans";
 
-
-
-
-
-export default function ProfileScreen() {
-  let [selectedImage, setSelectedImage] = useState(null);
-  const [name, setName] = useState(null);
+const CreateProfileScreen = ({ props, navigation }) => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageSaved, setImageSaved] = useState(null);
+  const [name, setName] = useState("");
+  const [pic, setPic] = useState("");
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
   const [birthDate, setBirthDate] = useState(null);
   const [gender, setGender] = useState(null);
- 
+  const [uid, setUid] = useState(null);
+  const [nameHover, setNameHoverColor] 	= useState(false);
+  const [dateHover, setDateHoverColor] 	= useState(false);
+  const [bioHover, setBioHoverColor] 	= useState(false);
+  const [isAnon, setIsAnon] 	= useState(false);
+  
+  let userData = new Map();
+  let [fontsLoaded] = useFonts({
+    PTSans_400Regular,
+  });
+
+  useEffect(
+    function effectFunction() {
+      async function fetchUsers() {
+        const user = firebase.auth().currentUser;
+        setUid(user.uid);
+        var userRef = UsersRef.doc(user.uid);
+        try {
+          var doc = await userRef.get();
+          const data = await doc.data();
+          let counter = 0;
+          let dataVals = Object.values(data);
+          let keys = Object.keys(data);
+          keys.forEach((key) => {
+            userData.set(key, dataVals[counter]);
+            counter = counter + 1;
+          });
+        } catch (error) {
+          console.log("retrieving error");
+          console.log(error);
+        }
+      }
+
+      // Defining what sequence of the async get() functions - check out mozilla article
+      async function sequentialStart() {
+        await fetchUsers();
+        //await setName(userData.get("nickname"));
+        await setPic(userData.get("profile_picture"));
+        await setEmail(userData.get("gmail"));
+        console.log("peepoo");
+      }
+
+      sequentialStart();
+    },
+    [imageSaved]
+  );
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert('Permission to access camera roll is required!');
+      alert("Permission to access camera roll is required!");
       return;
     }
 
@@ -32,142 +97,267 @@ export default function ProfileScreen() {
       return;
     }
 
-    setSelectedImage({ localUri: pickerResult.uri });
+    //setSelectedImage({ localUri: pickerResult.uri });
+    setPic(pickerResult.uri);
   };
+  let saveData = async () => {
+    try {
+      var metadata = {
+        contentType: "image/jpeg",
+      };
+      const response = await fetch(pic);
+      const blob = await response.blob();
+      const storageRef = firebase.storage().ref();
+      var file = blob;
+      console.log(selectedImage);
+      storageRef.child(uid).put(file, metadata);
+      storageRef
+        .child(uid)
+        .getDownloadURL()
+        .then((url) => {
+          UsersRef.doc(uid).update({
+            profile_picture: url,
+          });
+        });
+        
+      //navigation.goBack()
+      navigation.navigate("Loading")
+    } catch (e) {
+      console.log(e);
+      console.log(":the error")
+    }
+  };
+  let handleSubmit = async () => {};
+  if (imageSaved === null) setImageSaved(true);
 
-  if (selectedImage !== null) {
+  if (fontsLoaded) {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
-          <Image source={{ uri: selectedImage.localUri }} style={styles.logo} />
-        </TouchableOpacity>
+      <View style={styles.mainContainer}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <KeyboardAvoidingView
+            // behavior={Platform.OS === "ios" ? "padding" : "height"}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.mainContainer}
+          >
+            <Text style={styles.profileText}>Create your profile</Text>
+            <View style={styles.innerMainContainer}>
+              <TouchableOpacity
+                onPress={openImagePickerAsync}
+                style={styles.changeImage}>
+                <View>
+                  <Image source={{ uri: pic }} style={styles.image} />
+                  <View style={styles.greyPfpCover}>
+                    <View style={styles.greyColor}></View>
+                    <Ionicons name="add-outline" style={styles.plusSign} size={60} color="black" />
+                  </View>
+                </View>
+                <Text style={styles.uploadPfp}>Upload Profile Picture</Text>
+              </TouchableOpacity>
+
+              {/* <Text style={styles.prompt}>Name:</Text> */}
+              <TextInput
+                placeholder={"Name"}
+                value={name}
+                onChangeText={setName}
+                style={[styles.input, {borderColor: nameHover ? "#F20D54" : "#000000"}]}
+                onFocus={() => setNameHoverColor(true)} onBlur={() => setNameHoverColor(false)}
+              />
+              
+              {/* <Text style={styles.prompt}>Date of Birth:</Text> */}
+              <TextInputMask
+                style={[styles.input, {borderColor: dateHover ? "#F20D54" : "#000000"}]}
+                type={"datetime"}
+                options={{
+                  format: "MM/DD/YYYY",
+                }}
+                placeholder={"Birth Date: MM/DD/YYYY"}
+                value={birthDate}
+                onChangeText={setBirthDate}
+                onFocus={() => setDateHoverColor(true)} onBlur={() => setDateHoverColor(false)}
+              />
+
+              {/* <Text style={styles.prompt}>Gender:</Text> */}
+              <ModalDropdown
+                isFullWidth={true}
+                dropdownTextStyle={styles.dropDownText}
+                onSelect={setGender}
+                dropdownStyle={styles.dropDown}
+                style={styles.input}
+                defaultValue={"Select your gender"}
+                options={["Male", "Female", "Other"]}
+              />
+              <TextInput
+                placeholder={"Tell everyone a little bit about yourself!"}
+                value={bio}
+                onChangeText={setBio}
+                multiline={true}
+                style={[styles.input, 
+                  {borderColor: bioHover ? "#F20D54" : "#000000",
+                    height: "20%",
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    textAlignVertical: "bottom"
+                }]}
+                onFocus={() => setBioHoverColor(true)} onBlur={() => setBioHoverColor(false)}
+              />
+              <Switch
+                style={{ marginTop: 30 }}
+                onValueChange={()=>setIsAnon(!isAnon)}
+                value={isAnon}
+              />
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleSubmit()}
+              >
+                <LinearGradient
+                  // Button Linear Gradient
+                  colors={["#F20D54", "#FAE105"]}
+                  start={{ x: 0.1, y: 0.1 }}
+                  end={{ x: 0.9, y: 0.8 }}
+                  locations={[0.1, 0.9]}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText} onPress={()=>saveData()}>Save Changes</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
       </View>
     );
-  }
-
-  // const hideKeyboard = () =>{
-
-  // }
-
-  return (
-    <View style={styles.container1}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView
-        // behavior={Platform.OS === "ios" ? "padding" : "height"}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}>
-          <Text style = {styles.profileText}>Create your profile</Text>
-          <View style={styles.container2}>
-            <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
-              <Image
-              source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
-              style={styles.logo}
-              />
-              <Text>Upload Profile Picture</Text>
-            </TouchableOpacity>
-
-            <Text style={styles.prompt}>Name:</Text>
-            <TextInput placeholder="Name" value = {name} onChangeText = {setName} style={styles.input}/>
-            <Text style={styles.prompt}>Date of Birth:</Text>
-            <TextInputMask
-            style = {styles.input}
-            type={'datetime'}
-            options={{
-            format: 'MM/DD/YYYY'
-            }}
-            placeholder = {"MM/DD/YYYY"}
-            value={birthDate}
-            onChangeText={setBirthDate}/>
-
-            <Text style={styles.prompt}>Gender:</Text>
-
-            <ModalDropdown isFullWidth = {true} 
-            dropdownTextStyle = {styles.dropDownText} 
-            onSelect= {setGender} 
-            dropdownStyle={styles.dropDown}  
-            style = {styles.input} 
-            defaultValue = {"Select your gender"} 
-            options={['Male', 'Female','Other']}/>
-          </View>
     
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
-    </View>
-  );
-}
+  } else {
+    return <View></View>;
+  }
+};
+export default CreateProfileScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  changeImage: {
+    marginTop: 0,
+    alignItems: "center",
+  },
+  greyPfpCover:{
+    width: 205,
+    height: 205,
+    borderRadius: 205 / 2,
+    borderWidth: 5,
+    borderColor: "#fc0328",
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  greyColor:{
+    width: 195,
+    height: 195,
+    borderRadius: 195 / 2,
+    backgroundColor: "#BFBFBF",
+    opacity: 0.5,
+  },
+  image: {
+    width: 205,
+    height: 205,
+    borderRadius: 205 / 2,
+    borderWidth: 5,
+    borderColor: "#fc0328",
+    position: "absolute"
+
+  },
+  innerMainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor: 'blue',
+  },
+  input: {
+    height: 40,
+    width: "70%",
+    marginBottom: "5%",
+    marginTop: "0%",
+    padding: 10,
+    borderBottomWidth: 1,
+  },
+  newImageMainContainer: {
     flex: 1,
     // backgroundColor: 'gray',
   },
-  container1:{
+  mainContainer: {
     flex: 1,
     // backgroundColor: 'yellow',
   },
-  container2:{
-    flex: 1,
-    // backgroundColor: 'blue',
+  plusSign:{
+    position: "absolute",
+    bottom: 20,
+    right: 20,
   },
-  footer:{
-    display: 'flex',
-    width: '100%',
+  prompt: {
+    padding: 5,
+  },
+  uploadPfp:{
+    padding: 0,
+    margin: 0,
+    borderWidth: 1,
+    textAlign: "center",
+    fontSize: RFPercentage(1.5),
+    borderColor: "blue"
+  },
+  footer: {
+    display: "flex",
+    width: "100%",
     // backgroundColor: '#fff',
-    flexDirection: 'row-reverse',
+    flexDirection: "row-reverse",
     paddingBottom: 10,
   },
   profileText: {
-    fontWeight: 'bold',
-    fontSize: 25,
-    alignItems: 'flex-start',
-    paddingTop: 60,
-    padding: 20
+    fontWeight: "bold",
+    fontSize: RFPercentage(3.4),
+    alignItems: "flex-start",
+    paddingTop: "10%",
+    paddingLeft: "5%",
   },
-  logo: {
-    width: 205,
-    height: 205,
-    marginBottom: 20,
-    borderRadius: 205 / 2,
-  },
- prompt: {
-padding: 5
- },
   instructions: {
-    color: '#888',
-    fontSize: 18,
+    color: "#888",
+    fontSize: RFPercentage(0.4),
     marginHorizontal: 15,
     marginBottom: 10,
   },
   button: {
-    alignItems: 'center',
-    padding: 20,
-    borderRadius: 5,
+    height: 50,
+    width: "70%",
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "transparent",
+    borderRadius: 15,
+    marginTop: "15%",
   },
   buttonText: {
-    fontSize: 20,
-    color: '#fff',
+    fontSize: RFPercentage(3.4),
+    color: "white",
+    fontFamily: "PTSans_400Regular",
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 10,
+  // Your old button
+  // button: {
+  //   alignItems: 'center',
+  //   padding: 20,
+  //   borderRadius: 5,
+  // },
+  // buttonText: {
+  //   fontSize: 20,
+  //   color: '#fff',
+  // },
+  test: {
+    justifyContent: "space-around",
+  },
+  dropDown: {
     padding: 10,
-  
-   
+    alignItems: "center",
   },
-  test: { 
-    justifyContent: "space-around"
-},
-dropDown : {
-  padding: 10,
-  alignItems: "center",
-  
- 
-},
-dropDownText: {
-  color: "black",
-  fontSize: RFPercentage(1.5),
-  fontFamily: "lato-regular"
-}
+  dropDownText: {
+    color: "black",
+    fontSize: RFPercentage(1.5),
+    fontFamily: "PTSans_400Regular",
+  },
 });
