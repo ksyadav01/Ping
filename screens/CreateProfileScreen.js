@@ -200,11 +200,15 @@ const CreateProfileScreen = ({ props, navigation }) => {
                 }]}
                 onFocus={() => setBioHoverColor(true)} onBlur={() => setBioHoverColor(false)}
               />
-              <Switch
-                style={{ marginTop: 30 }}
-                onValueChange={()=>setIsAnon(!isAnon)}
-                value={isAnon}
-              />
+              <View style={styles.anonymousHolder}>
+                <Text style={styles.anonText}>Anonymous user</Text>
+                <Ionicons name="help-circle-outline" size={24} color="black" style={styles.anonQuestion} />
+                <Switch
+                  //style={{ marginTop: 30 }}
+                  onValueChange={()=>setIsAnon(!isAnon)}
+                  value={isAnon}
+                />
+              </View>
 
               <TouchableOpacity
                 style={styles.button}
@@ -234,9 +238,20 @@ const CreateProfileScreen = ({ props, navigation }) => {
 export default CreateProfileScreen;
 
 const styles = StyleSheet.create({
+  anonymousHolder: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  anonText:{
+    //display: "inline-block"
+  },
+  anonQuestion: {
+    //display: "inline-block"
+  },
   changeImage: {
     marginTop: 0,
     alignItems: "center",
+    
   },
   greyPfpCover:{
     width: 205,
