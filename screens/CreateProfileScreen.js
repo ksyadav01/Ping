@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Modal,
   TextInput,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
@@ -42,6 +43,7 @@ const CreateProfileScreen = ({ props, navigation }) => {
   const [dateHover, setDateHoverColor] 	= useState(false);
   const [bioHover, setBioHoverColor] 	= useState(false);
   const [isAnon, setIsAnon] 	= useState(false);
+  const [showModal, setShowModal]  = useState(false)
   
   let userData = new Map();
   let [fontsLoaded] = useFonts({
@@ -116,7 +118,13 @@ const CreateProfileScreen = ({ props, navigation }) => {
         .getDownloadURL()
         .then((url) => {
           UsersRef.doc(uid).update({
-            profile_picture: url,
+            "profile_picture": url,
+            "bio": bio,
+            "nickname": name,
+            "date_of_birth": birthDate,
+            "gender": gender
+
+
           });
         });
         
@@ -139,7 +147,12 @@ const CreateProfileScreen = ({ props, navigation }) => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.mainContainer}
           >
-            <Text style={styles.profileText}>Create your profile</Text>
+            {
+              (!nameHover && !dateHover && !bioHover )&&
+              <Text style={styles.profileText}>
+                Create your profile
+              </Text>
+            }
             <View style={styles.innerMainContainer}>
               <TouchableOpacity
                 onPress={openImagePickerAsync}
@@ -151,10 +164,9 @@ const CreateProfileScreen = ({ props, navigation }) => {
                     <Ionicons name="add-outline" style={styles.plusSign} size={60} color="black" />
                   </View>
                 </View>
-                <Text style={styles.uploadPfp}>Upload Profile Picture</Text>
+                {/* <Text style={styles.uploadPfp}>Upload Profile Picture</Text> */}
               </TouchableOpacity>
 
-              {/* <Text style={styles.prompt}>Name:</Text> */}
               <TextInput
                 placeholder={"Name"}
                 value={name}
@@ -163,7 +175,6 @@ const CreateProfileScreen = ({ props, navigation }) => {
                 onFocus={() => setNameHoverColor(true)} onBlur={() => setNameHoverColor(false)}
               />
               
-              {/* <Text style={styles.prompt}>Date of Birth:</Text> */}
               <TextInputMask
                 style={[styles.input, {borderColor: dateHover ? "#F20D54" : "#000000"}]}
                 type={"datetime"}
@@ -176,7 +187,6 @@ const CreateProfileScreen = ({ props, navigation }) => {
                 onFocus={() => setDateHoverColor(true)} onBlur={() => setDateHoverColor(false)}
               />
 
-              {/* <Text style={styles.prompt}>Gender:</Text> */}
               <ModalDropdown
                 isFullWidth={true}
                 dropdownTextStyle={styles.dropDownText}
@@ -193,7 +203,7 @@ const CreateProfileScreen = ({ props, navigation }) => {
                 multiline={true}
                 style={[styles.input, 
                   {borderColor: bioHover ? "#F20D54" : "#000000",
-                    height: "20%",
+                    height: "15%",
                     borderWidth: 1,
                     borderRadius: 10,
                     textAlignVertical: "bottom"
@@ -202,13 +212,38 @@ const CreateProfileScreen = ({ props, navigation }) => {
               />
               <View style={styles.anonymousHolder}>
                 <Text style={styles.anonText}>Anonymous user</Text>
-                <Ionicons name="help-circle-outline" size={24} color="black" style={styles.anonQuestion} />
+                
+                <TouchableOpacity style={styles.iconButton} onPress={()=>setShowModal(true)} >
+                  <Ionicons name="help-circle-outline" size={24} color="black"  />
+                </TouchableOpacity>
                 <Switch
                   //style={{ marginTop: 30 }}
                   onValueChange={()=>setIsAnon(!isAnon)}
                   value={isAnon}
+                  trackColor={{true: '#fc0328', false: 'grey'}}
+                  thumbColor={[Platform.OS=='ios'?'#FFFFFF':(isAnon ?'#fc0328':'#ffffff')]}
                 />
               </View>
+              
+              <Modal transparent={true} visible={showModal}>
+                <View style={styles.anonModalBackground}>
+                  <View style={styles.anonModal}>
+                    <View style={styles.anonModalCenter}>
+                      <Text style={{fontSize: RFPercentage(2.3), fontFamily: "PTSans_400Regular", fontWeight: "bold",}}>
+                        Stay anonymous?
+                      </Text>
+                      <TouchableOpacity style={styles.iconButton} onPress={()=>setShowModal(false)} >
+                        <Ionicons name="close-circle-outline" size={24} color="black" />
+                      </TouchableOpacity>
+                    </View>
+                    <Text style={{marginTop: "7%", color: "#A1A1A1", fontFamily: "PTSans_400Regular"}}>
+                      Choosing to remain anonymous removes your name from showing up on the list of attendees for events,
+                       however you also won't be able to see who's going to each event. This choice isn't binding, so feel
+                       free to change your mind later on!</Text>
+                  </View>
+                </View>
+              </Modal>
+
 
               <TouchableOpacity
                 style={styles.button}
@@ -222,7 +257,7 @@ const CreateProfileScreen = ({ props, navigation }) => {
                   locations={[0.1, 0.9]}
                   style={styles.button}
                 >
-                  <Text style={styles.buttonText} onPress={()=>saveData()}>Save Changes</Text>
+                  <Text style={styles.buttonText} onPress={()=>saveData()}>Create Profile</Text>
                 </LinearGradient>
               </TouchableOpacity>
             </View>
@@ -239,6 +274,21 @@ export default CreateProfileScreen;
 
 const styles = StyleSheet.create({
   anonymousHolder: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  anonModal:{
+    backgroundColor: "#ffffff",
+    margin: 50,
+    marginTop: "50%",
+    padding: 40,
+    borderRadius: 10
+  },
+  anonModalBackground:{
+    backgroundColor: "#000000aa",
+    flex: 1
+  },
+  anonModalCenter:{
     flexDirection: "row",
     justifyContent: "space-between"
   },
@@ -270,6 +320,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#BFBFBF",
     opacity: 0.5,
   },
+  iconButton:{
+    backgroundColor: "white",
+    borderWidth: 0,
+    borderRadius: 0,
+    borderColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   image: {
     width: 205,
     height: 205,
@@ -299,7 +357,8 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    // backgroundColor: 'yellow',
+    backgroundColor: 'white',
+    fontFamily: "PTSans_400Regular"
   },
   plusSign:{
     position: "absolute",
@@ -330,6 +389,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     paddingTop: "10%",
     paddingLeft: "5%",
+    fontFamily: "PTSans_400Regular"
   },
   instructions: {
     color: "#888",
@@ -346,7 +406,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "transparent",
     borderRadius: 15,
-    marginTop: "15%",
+    marginTop: "5%",
   },
   buttonText: {
     fontSize: RFPercentage(3.4),
