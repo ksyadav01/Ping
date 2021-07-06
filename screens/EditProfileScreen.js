@@ -75,9 +75,11 @@ const EditProfileScreen = ({ props, navigation }) => {
       // Defining what sequence of the async get() functions - check out mozilla article
       async function sequentialStart() {
         await fetchUsers();
-        //await setName(userData.get("nickname"));
+        await setName(userData.get("nickname"));
         await setPic(userData.get("profile_picture"));
         await setEmail(userData.get("gmail"));
+        await setBirthDate(userData.get("date_of_birth"));
+        await setIsAnon(userData.get("is_anonymous"));
         console.log("peepoo");
       }
 
@@ -150,7 +152,7 @@ const EditProfileScreen = ({ props, navigation }) => {
             {
               (!nameHover && !dateHover && !bioHover )&&
               <Text style={styles.profileText}>
-                Create your profile
+                Edit your profile
               </Text>
             }
             <View style={styles.innerMainContainer}>
@@ -238,8 +240,7 @@ const EditProfileScreen = ({ props, navigation }) => {
                     </View>
                     <Text style={{marginTop: "7%", color: "#A1A1A1", fontFamily: "PTSans_400Regular"}}>
                       Choosing to remain anonymous removes your name from showing up on the list of attendees for events,
-                       however you also won't be able to see who's going to each event. This choice isn't binding, so feel
-                       free to change your mind later on!</Text>
+                       however you also won't be able to see who's going to each event.</Text>
                   </View>
                 </View>
               </Modal>
@@ -257,7 +258,7 @@ const EditProfileScreen = ({ props, navigation }) => {
                   locations={[0.1, 0.9]}
                   style={styles.button}
                 >
-                  <Text style={styles.buttonText} onPress={()=>saveData()}>Create Profile</Text>
+                  <Text style={styles.buttonText} onPress={()=>saveData()}>Save Changes</Text>
                 </LinearGradient>
               </TouchableOpacity>
             </View>

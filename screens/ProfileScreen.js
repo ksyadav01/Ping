@@ -54,7 +54,6 @@ const ProfileScreen = ({props, navigation}) => {
           }
         }
     
-    // Defining what sequence of the async get() functions - check out mozilla article
         async function sequentialStart() {
           await fetchUsers();
           await setName(userData.get('nickname'))
@@ -80,7 +79,7 @@ const ProfileScreen = ({props, navigation}) => {
                     <Text style={styles.name}>{name}</Text>
                     <Text>{email}</Text>
 
-                    <Button title="Edit Profile" onPress={()=>navigation.navigate("CreateProfileScreen")}></Button>
+                    <Button title="Edit Profile" onPress={()=>navigation.navigate("EditProfileScreen")}></Button>
                 </View>
             </SafeAreaView>
         </TouchableWithoutFeedback>

@@ -122,9 +122,8 @@ const CreateProfileScreen = ({ props, navigation }) => {
             "bio": bio,
             "nickname": name,
             "date_of_birth": birthDate,
-            "gender": gender
-
-
+            "gender": gender,
+            "is_anonymous": isAnon
           });
         });
         
