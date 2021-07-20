@@ -15,6 +15,7 @@ import {
   TouchableWithoutFeedback,
   SafeAreaView,
   ImageBackground,
+  ScrollView,
   Alert 
 } from "react-native";
 
@@ -31,6 +32,9 @@ import { TextInputMask } from "react-native-masked-text";
 import { UsersRef } from "../firebase/config";
 import { picStorage } from "../firebase/config";
 import { useFonts, PTSans_400Regular } from "@expo-google-fonts/pt-sans";
+import TextCustom from '../components/TextCustom';
+import TextSansBold from '../components/TextSansBold';
+import SelectLocationModal from '../components/SelectLocationModal';
 
 const CreateScreen = ({ props, navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -45,7 +49,15 @@ const CreateScreen = ({ props, navigation }) => {
   const [showDate, setShowDate] = useState(false);
   const [showTime, setShowTime] = useState(false);
   const [alertResult, setAlertResult] = useState(false);
-
+  
+  
+  const [showTagModal, setShowTagModal] = useState(false);
+  const [tagOutdoor, setTagOutdoor] = useState(false);
+  const [tagIndoor, setTagIndoor] = useState(false);
+  const [tagHangout, setTagHangout] = useState(false);
+  const [tagStudy, setTagStudy] = useState(false);
+  const [tagClub, setTagClub] = useState(false);
+  const [tagOther, setTagOther] = useState(false);
 
   const [type, setType] = useState(null); // Dropdowns
   const [uid, setUid] = useState(null);
@@ -53,6 +65,7 @@ const CreateScreen = ({ props, navigation }) => {
   const [descHover, setDescHoverColor] = useState(false);
   const [d, setBioHoverColor] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showLocationModal, setShowLocationModal] = useState(false);
 
   let userData = new Map();
   let [fontsLoaded] = useFonts({
@@ -161,16 +174,21 @@ const CreateScreen = ({ props, navigation }) => {
 
   if (fontsLoaded) {
     return (
-      <View style={styles.mainContainer}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <KeyboardAvoidingView
+      
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
             // behavior={Platform.OS === "ios" ? "padding" : "height"}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.mainContainer}
+            style={{flex:1}}
           >
-            {!nameHover && !descHover && (
-              <Text style={styles.profileText}>Create an event!</Text>
-            )}
+      <View style={[styles.mainContainer, descHover||nameHover ? styles.extend : styles.extend2 ]}>
+      <SafeAreaView style={{flex:1}}>
+      <ScrollView>
+          
+            {/* {!nameHover && !descHover && (
+              <TextSansBold style={styles.createText}>Create an event!</TextSansBold>
+            )} */}
+            <TextSansBold style={styles.createText}>Create an event!</TextSansBold>
             <View style={styles.innerMainContainer}>
               <View style={styles.topContainer}>
                 <View style={{flex: 1}}>
@@ -189,11 +207,11 @@ const CreateScreen = ({ props, navigation }) => {
                         />
                       </View>
                     </View>
-                    {/* <Text style={styles.uploadPfp}>Upload An Image (optional)</Text> */}
+                    {/* <TextCustom style={styles.uploadPfp}>Upload An Image (optional)</Text> */}
                   </TouchableOpacity>
                 </View>
                 
-                <View style={{flex: 1.5,borderWidth: 1}}>
+                <View style={{flex: 1.5}}>
                   <View style={styles.topRightContainer}>
                     <TextInput
                       placeholder={"Event Name"}
@@ -208,30 +226,30 @@ const CreateScreen = ({ props, navigation }) => {
                     />
                     <View style={{width: RFPercentage(30), fontSize: RFPercentage(10)}}>
                       <View style={{flexDirection: "row"}}>
-                        <Text style={{fontSize: RFPercentage(2.1), fontWeight: "bold"}}>
+                        <TextCustom style={{fontSize: RFPercentage(2.1), fontWeight: "bold"}}>
                           Event Date:{"  "}
-                        </Text>
-                        <Text style={{fontSize: RFPercentage(2)}}>
+                        </TextCustom>
+                        <TextCustom style={{fontSize: RFPercentage(2)}}>
                         {String(date.getMonth() + 1).padStart(2, '0')+"/"+String(date.getDate()).padStart(2, '0')+"/"+
                           date.getFullYear()}
-                        </Text>
+                        </TextCustom>
                       </View>
                       <View style={{flexDirection: "row"}}>
-                        <Text style={{fontSize: RFPercentage(2.1), fontWeight: "bold"}}>
+                        <TextCustom style={{fontSize: RFPercentage(2.1), fontWeight: "bold"}}>
                           Event Date:{"  "}
-                        </Text>
-                        <Text style={{fontSize: RFPercentage(2)}}>
+                        </TextCustom>
+                        <TextCustom style={{fontSize: RFPercentage(2)}}>
                           {String(time.getHours()%12)+":"+String(time.getMinutes()).padStart(2, '0')
                             + (time.getHours()%12 ? " PM" : " AM")}
-                        </Text>
+                        </TextCustom>
                       </View>
                     </View>
                     <View style={styles.dateTimeContainer}>
                       <TouchableOpacity style={styles.dateTimeButton} onPress={()=>setShowDate(true)}>
-                        <Text>Date</Text>
+                        <TextCustom style={{color:"white", fontSize: RFPercentage(2.3)}}>Date</TextCustom>
                       </TouchableOpacity>
                       <TouchableOpacity style={styles.dateTimeButton} onPress={()=>setShowTime(true)}>
-                        <Text>Time</Text>
+                        <TextCustom style={{color:"white", fontSize: RFPercentage(2.3)}}>Time</TextCustom>
                       </TouchableOpacity>
                       {showDate && (
                         <RNDateTimePicker
@@ -282,8 +300,103 @@ const CreateScreen = ({ props, navigation }) => {
                   </View>
                 </View>
               </View>
+              
+              <View style={styles.tagsBox}>
+                <View style={{justifyContent: "center",flexDirection: "row",  flex: 1, marginBottom: RFPercentage(2)}}>
+                  <View style={{flexDirection: "row", alignItems: "center"}}>
+                    <TextSansBold style={styles.tagsHeader}>Select your tags!{" "}</TextSansBold>
+                    <TouchableOpacity onPress={() => setShowTagModal(true)}>
+                      <Ionicons name="help-circle-outline" size={24} color="black"> </Ionicons>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.tagsBoxRows}>
+                  <View style={styles.tagsIndividual}>
+                    {tagOutdoor ? 
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagOutdoor(false)}>
+                        <Ionicons name="checkbox-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Outdoor Activities</TextCustom>
+                      </TouchableOpacity>
+                      :
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagOutdoor(true)}>
+                        <Ionicons name="square-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Outdoor Activities</TextCustom>
+                      </TouchableOpacity>}
+                  </View>
+
+                  <View style={styles.tagsIndividual}>
+                    {tagIndoor ? 
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagIndoor(false)}>
+                        <Ionicons name="checkbox-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Indoor Activities</TextCustom>
+                      </TouchableOpacity>
+                      :
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagIndoor(true)}>
+                        <Ionicons name="square-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Indoor Activities</TextCustom>
+                      </TouchableOpacity>}
+                  </View>
+                </View>
+
+                <View style={styles.tagsBoxRows}>
+                  <View style={styles.tagsIndividual}>
+                    {tagHangout ? 
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagHangout(false)}>
+                        <Ionicons name="checkbox-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Hanging Out</TextCustom>
+                      </TouchableOpacity>
+                      :
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagHangout(true)}>
+                        <Ionicons name="square-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Hanging Out</TextCustom>
+                      </TouchableOpacity>}
+                  </View>
+                  <View style={styles.tagsIndividual}>
+                    {tagStudy ? 
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagStudy(false)}>
+                        <Ionicons name="checkbox-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Study Groups</TextCustom>
+                      </TouchableOpacity>
+                      :
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagStudy(true)}>
+                        <Ionicons name="square-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Study Groups</TextCustom>
+                      </TouchableOpacity>}
+                  </View>
+                </View>
+
+                <View style={styles.tagsBoxRows}>
+                  <View style={styles.tagsIndividual}>
+                    {tagClub ? 
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagClub(false)}>
+                        <Ionicons name="checkbox-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Club Activities</TextCustom>
+                      </TouchableOpacity>
+                      :
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagClub(true)}>
+                        <Ionicons name="square-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Club Activities</TextCustom>
+                      </TouchableOpacity>}
+                  </View>
+                  <View style={styles.tagsIndividual}>
+                    {tagOther ? 
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagOther(false)}>
+                        <Ionicons name="checkbox-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Other</TextCustom>
+                      </TouchableOpacity>
+                      :
+                      <TouchableOpacity style={styles.tagsIndividual} onPress={()=>setTagOther(true)}>
+                        <Ionicons name="square-outline" size={24} color="black" />
+                        <TextCustom style={styles.tagsText}> Other</TextCustom>
+                      </TouchableOpacity>}
+                  </View>
+                </View>
+              </View>
+
+
               <TextInput
-                placeholder={"Tell everyone a little bit about yourself!"}
+                placeholder={"Let everyone know the details of your event!"}
                 value={desc}
                 onChangeText={setDesc}
                 multiline={true}
@@ -293,88 +406,25 @@ const CreateScreen = ({ props, navigation }) => {
                     borderColor: descHover ? "#F20D54" : "#000000",
                     height: RFPercentage(10),
                     marginTop: RFPercentage(7),
-                    width: RFPercentage(40),
+                    width: RFPercentage(45),
                     borderWidth: 1,
                     borderRadius: 10,
                     textAlignVertical: "bottom",
+                    fontSize: RFPercentage(1.7)
                   },
                 ]}
                 onFocus={() => setDescHoverColor(true)}
                 onBlur={() => setDescHoverColor(false)}
               />
-              <View style={styles.anonymousHolder}>
-                <Text style={styles.anonText}>Anonymous user</Text>
-
-                <TouchableOpacity
-                  style={styles.iconButton}
-                  onPress={() => setShowModal(true)}
-                >
-                  <Ionicons
-                    name="help-circle-outline"
-                    size={24}
-                    color="black"
-                  />
-                </TouchableOpacity>
-                {/* <Switch
-                  //style={{ marginTop: 30 }}
-                  onValueChange={() => setIsAnon(!isAnon)}
-                  value={isAnon}
-                  trackColor={{ true: "#fc0328", false: "grey" }}
-                  thumbColor={[
-                    Platform.OS == "ios"
-                      ? "#FFFFFF"
-                      : isAnon
-                      ? "#fc0328"
-                      : "#ffffff",
-                  ]}
-                /> */}
-              </View>
-
-              {/* <Modal transparent={true} visible={showModal}>
-                <View style={styles.anonModalBackground}>
-                  <View style={styles.anonModal}>
-                    <View style={styles.anonModalCenter}>
-                      <Text
-                        style={{
-                          fontSize: RFPercentage(2.3),
-                          fontFamily: "PTSans_400Regular",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Stay anonymous?
-                      </Text>
-                      <TouchableOpacity
-                        style={styles.iconButton}
-                        onPress={() => setShowModal(false)}
-                      >
-                        <Ionicons
-                          name="close-circle-outline"
-                          size={24}
-                          color="black"
-                        />
-                      </TouchableOpacity>
-                    </View>
-                    <Text
-                      style={{
-                        marginTop: "7%",
-                        color: "#A1A1A1",
-                        fontFamily: "PTSans_400Regular",
-                      }}
-                    >
-                      Choosing to remain anonymous removes your name from
-                      showing up on the list of attendees for events, however
-                      you also won't be able to see who's going to each event.
-                      This choice isn't binding, so feel free to change your
-                      mind later on!
-                    </Text>
+              <TouchableOpacity onPress={()=>setShowLocationModal(true)}>
+                <View style={styles.mapButtonHolder}>
+                  <View style={styles.mapButton}>
+                    <TextCustom style={{color:"white", fontSize: RFPercentage(2.3)}}>Set Location</TextCustom>
                   </View>
                 </View>
-              </Modal> */}
+              </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleSubmit()}
-              >
+              <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
                 <LinearGradient
                   // Button Linear Gradient
                   colors={["#F20D54", "#FAE105"]}
@@ -383,15 +433,62 @@ const CreateScreen = ({ props, navigation }) => {
                   locations={[0.1, 0.9]}
                   style={styles.button}
                 >
-                  <Text style={styles.buttonText} onPress={() => saveData()}>
+                  <TextCustom style={styles.buttonText} onPress={() => saveData()}>
                     Create Profile
-                  </Text>
+                  </TextCustom>
                 </LinearGradient>
               </TouchableOpacity>
+              <SelectLocationModal show={showLocationModal} setShow={setShowLocationModal}></SelectLocationModal>
+              {/* <View style={styles.anonymousHolder}>
+                <TextCustom style={styles.anonText}>Anonymous user</TextCustom>
+
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => setShowModal(true)}>
+                  <Ionicons
+                    name="help-circle-outline"
+                    size={24}
+                    color="black"
+                  />
+                </TouchableOpacity>
+                <Switch
+                  //style={{ marginTop: 30 }}
+                  onValueChange={() => setIsAnon(!isAnon)}
+                  value={isAnon}
+                  trackColor={{ true: "#fc0328", false: "lightgray" }}
+                  thumbColor={[
+                    Platform.OS == "ios" ? "#FFFFFF" : "fc0328"
+                  ]}
+                  
+                />
+              </View> */}
+                 {/* Tag Modal  for information about tags*/}
+              <Modal transparent={true} visible={showTagModal}>
+                <View style={styles.tagModalBackground}>
+                  <View style={styles.tagModal}>
+                    <View style={styles.tagModalCenter}>
+                      <TextSansBold style={{ fontSize: RFPercentage(2.3)}}>
+                        What are tags?
+                      </TextSansBold>
+                      <TouchableOpacity style={styles.iconButton} onPress={() => setShowTagModal(false)}>
+                        <Ionicons name="close-circle-outline" size={40} color="black" />
+                      </TouchableOpacity>
+                    </View>
+                    <TextCustom style={{ marginTop: "7%", color: "#A1A1A1", }}>
+                      Tags are a way for people to know more about the event type, and allows them to filter by catagory. It also 
+                      helps us show this event to as many potential event joiners as possible, so make sure to select the right ones!
+                    </TextCustom>
+                  </View>
+                </View>
+              </Modal> 
             </View>
-          </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+        
+      </ScrollView>
+      </SafeAreaView>
       </View>
+      
+      </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     );
   } else {
     return <View></View>;
@@ -445,6 +542,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // flex: 1
   },
+  createText: {
+    fontWeight: "bold",
+    fontSize: RFPercentage(4),
+    alignItems: "flex-start",
+    paddingTop: "10%",
+    paddingLeft: "5%",
+    fontFamily: "PTSans_400Regular",
+  },
   dateTimeButton:{
     height: RFPercentage(5),
     width: RFPercentage(12),
@@ -458,9 +563,14 @@ const styles = StyleSheet.create({
   dateTimeContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    borderWidth: 1,
     width: RFPercentage(30),
-    marginTop: "5%",
+    marginTop: RFPercentage(1),
+  },
+  extend:{
+    paddingBottom: RFPercentage(20)
+  },
+  extend2:{
+    paddingBottom: 20
   },
   greyPfpCover: {
     width: RFPercentage(18),
@@ -508,7 +618,7 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
     marginTop: "0%",
     padding: 10,
-    borderWidth: 1,
+    borderBottomWidth: 1,
   },
   newImageMainContainer: {
     flex: 1,
@@ -518,6 +628,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     fontFamily: "PTSans_400Regular",
+    justifyContent: "flex-end",
+    //paddingBottom: 0//RFPercentage(25)
+  },
+  mapButton:{
+    height: RFPercentage(6),
+    width: RFPercentage(20),
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "transparent",
+    borderRadius: 15,
+    backgroundColor: "#fc0328",
+    
+  },
+  mapButtonHolder:{
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent:"flex-end",
+    width: RFPercentage(50),
+    marginTop: RFPercentage(1),
   },
   nameInput: {
     height: 50,
@@ -525,7 +655,7 @@ const styles = StyleSheet.create({
     marginBottom: RFPercentage(1),
     marginTop: 0,
     padding: 10,
-    borderWidth: 1,
+    borderBottomWidth: 1,
   },
   plusSign: {
     position: "absolute",
@@ -534,6 +664,51 @@ const styles = StyleSheet.create({
   },
   prompt: {
     padding: 5,
+  },
+  tagsBox:{
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderRadius: 20,
+    width: RFPercentage(50),
+    height: RFPercentage(20),
+    marginTop: RFPercentage(2),
+    paddingLeft: RFPercentage(2),
+    paddingRight: RFPercentage(0),
+    paddingBottom: RFPercentage(.5),
+    borderColor: "#fc0328",
+    flexDirection: "column"
+  },
+  tagsBoxRows:{
+    flexDirection:"row",
+    marginBottom: RFPercentage(1.2)
+  },
+  tagsHeader:{
+    fontSize: RFPercentage(2.8)
+  },
+  tagsIndividual:{
+    flexDirection:"row",
+    flex:1,
+    alignItems: "center",
+  },
+  tagModal: {
+    backgroundColor: "#ffffff",
+    margin: RFPercentage(1),
+    marginTop: RFPercentage(30),
+    padding: 40,
+    borderRadius: 10,
+  },
+  tagModalBackground: {
+    backgroundColor: "#000000aa",
+    flex: 1,
+  },
+  tagModalCenter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  tagsText:{
+    fontSize: RFPercentage(2.2)
   },
   topContainer:{
     flexDirection: "row",
@@ -559,14 +734,6 @@ const styles = StyleSheet.create({
     // backgroundColor: '#fff',
     flexDirection: "row-reverse",
     paddingBottom: 10,
-  },
-  profileText: {
-    fontWeight: "bold",
-    fontSize: RFPercentage(3.4),
-    alignItems: "flex-start",
-    paddingTop: "10%",
-    paddingLeft: "5%",
-    fontFamily: "PTSans_400Regular",
   },
   instructions: {
     color: "#888",

@@ -217,10 +217,13 @@ const CreateProfileScreen = ({ props, navigation }) => {
                 </TouchableOpacity>
                 <Switch
                   //style={{ marginTop: 30 }}
-                  onValueChange={()=>setIsAnon(!isAnon)}
+                  onValueChange={() => setIsAnon(!isAnon)}
                   value={isAnon}
-                  trackColor={{true: '#fc0328', false: 'grey'}}
-                  thumbColor={[Platform.OS=='ios'?'#FFFFFF':(isAnon ?'#fc0328':'#ffffff')]}
+                  trackColor={{ true: "#fc0328", false: "lightgray" }}
+                  thumbColor={[
+                    Platform.OS == "ios" ? "#FFFFFF" : "fc0328"
+                  ]}
+                  
                 />
               </View>
               
