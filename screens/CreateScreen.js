@@ -15,6 +15,7 @@ import {
   TouchableWithoutFeedback,
   SafeAreaView,
   ImageBackground,
+  Alert 
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
@@ -22,6 +23,7 @@ import * as ImagePicker from "expo-image-picker";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import storage from "@react-native-firebase/storage";
 import firebase from "firebase";
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 import ModalDropdown from "react-native-modal-dropdown";
 import { Ionicons } from "@expo/vector-icons";
@@ -37,8 +39,14 @@ const CreateScreen = ({ props, navigation }) => {
   const [pic, setPic] = useState("");
   const [email, setEmail] = useState("");
   const [desc, setDesc] = useState("");
-  const [date, setDate] = useState(null); // Uses Date/time modules inbuilt in phones
-  const [time, setTime] = useState(null);
+
+  const [date, setDate] = useState(new Date()); // Uses Date/time modules inbuilt in phones
+  const [time, setTime] = useState(new Date());
+  const [showDate, setShowDate] = useState(false);
+  const [showTime, setShowTime] = useState(false);
+  const [alertResult, setAlertResult] = useState(false);
+
+
   const [type, setType] = useState(null); // Dropdowns
   const [uid, setUid] = useState(null);
   const [nameHover, setNameHoverColor] = useState(false);
@@ -137,6 +145,20 @@ const CreateScreen = ({ props, navigation }) => {
   let handleSubmit = async () => {};
   if (imageSaved === null) setImageSaved(true);
 
+  const invalidDateTime =  () =>
+    Alert.alert(
+      "Error Selecting Date",
+      "Please select a date and time on or after today. Unforunately, you can't make events in the past!",
+      [
+        {
+          text: "Ok",
+          onPress: () => setAlertResult(false),
+          style: "cancel"
+        }
+      ],
+      { cancelable: false }
+    );
+
   if (fontsLoaded) {
     return (
       <View style={styles.mainContainer}>
@@ -184,42 +206,82 @@ const CreateScreen = ({ props, navigation }) => {
                       onFocus={() => setNameHoverColor(true)}
                       onBlur={() => setNameHoverColor(false)}
                     />
+                    <View style={{width: RFPercentage(30), fontSize: RFPercentage(10)}}>
+                      <View style={{flexDirection: "row"}}>
+                        <Text style={{fontSize: RFPercentage(2.1), fontWeight: "bold"}}>
+                          Event Date:{"  "}
+                        </Text>
+                        <Text style={{fontSize: RFPercentage(2)}}>
+                        {String(date.getMonth() + 1).padStart(2, '0')+"/"+String(date.getDate()).padStart(2, '0')+"/"+
+                          date.getFullYear()}
+                        </Text>
+                      </View>
+                      <View style={{flexDirection: "row"}}>
+                        <Text style={{fontSize: RFPercentage(2.1), fontWeight: "bold"}}>
+                          Event Date:{"  "}
+                        </Text>
+                        <Text style={{fontSize: RFPercentage(2)}}>
+                          {String(time.getHours()%12)+":"+String(time.getMinutes()).padStart(2, '0')
+                            + (time.getHours()%12 ? " PM" : " AM")}
+                        </Text>
+                      </View>
+                    </View>
                     <View style={styles.dateTimeContainer}>
-                      <TouchableOpacity style={styles.dateTimeButton}>
+                      <TouchableOpacity style={styles.dateTimeButton} onPress={()=>setShowDate(true)}>
                         <Text>Date</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.dateTimeButton}>
+                      <TouchableOpacity style={styles.dateTimeButton} onPress={()=>setShowTime(true)}>
                         <Text>Time</Text>
                       </TouchableOpacity>
+                      {showDate && (
+                        <RNDateTimePicker
+                          testID="dateTimePicker"
+                          value={date}
+                          mode={"date"}
+                          //is24Hour={true}
+                          display="default"
+                          onChange={(e,dates)=>{
+                            if (dates) {
+                              if(dates < new Date()){ //If selected date is before current date
+                                invalidDateTime()
+                              }
+                              else{
+                                setDate(dates);
+                              }
+                            }
+                            setShowDate(false);
+                            
+                          }}
+                        />
+                      )}
+                      {showTime && (
+                        <RNDateTimePicker
+                          testID="dateTimePicker"
+                          value={time}
+                          mode={"time"}
+                          //is24Hour={true}
+                          display="default"
+                          onChange={(e,times)=>{
+                            if (times) {
+                              console.log(times)
+                              let currentDate = new Date();
+                              if(times < currentDate && (date.getFullYear()<=currentDate.getFullYear()
+                                && date.getMonth()<=currentDate.getMonth()  //If selected time is before current time and date
+                                  && date.getDay()<=currentDate.getDay())){
+                                invalidDateTime()
+                              }
+                              else{
+                                setTime(times);
+                              }
+                            }
+                            setShowTime(false);
+                          }}
+                        />
+                      )}
                     </View>
                   </View>
                 </View>
               </View>
-              {/* <TextInputMask
-                style={[
-                  styles.input,
-                  { borderColor: dateHover ? "#F20D54" : "#000000" },
-                ]}
-                type={"datetime"}
-                options={{
-                  format: "MM/DD/YYYY",
-                }}
-                placeholder={"Birth Date: MM/DD/YYYY"}
-                value={birthDate}
-                onChangeText={setBirthDate}
-                onFocus={() => setDateHoverColor(true)}
-                onBlur={() => setDateHoverColor(false)}
-              /> */}
-
-              {/* <ModalDropdown
-                isFullWidth={true}
-                dropdownTextStyle={styles.dropDownText}
-                onSelect={setType}
-                dropdownStyle={styles.dropDown}
-                style={styles.input}
-                defaultValue={"Select the event category(s)"}
-                options={["Study Group", "Outdoor Activities", "Indoor Activities", "Club"]}
-              /> */}
               <TextInput
                 placeholder={"Tell everyone a little bit about yourself!"}
                 value={desc}
@@ -230,13 +292,15 @@ const CreateScreen = ({ props, navigation }) => {
                   {
                     borderColor: descHover ? "#F20D54" : "#000000",
                     height: RFPercentage(10),
+                    marginTop: RFPercentage(7),
+                    width: RFPercentage(40),
                     borderWidth: 1,
                     borderRadius: 10,
                     textAlignVertical: "bottom",
                   },
                 ]}
-                onFocus={() => setBioHoverColor(true)}
-                onBlur={() => setBioHoverColor(false)}
+                onFocus={() => setDescHoverColor(true)}
+                onBlur={() => setDescHoverColor(false)}
               />
               <View style={styles.anonymousHolder}>
                 <Text style={styles.anonText}>Anonymous user</Text>
@@ -389,12 +453,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "transparent",
     borderRadius: 15,
-    marginTop: "5%",
-    backgroundColor: "#fc0328"
+    backgroundColor: "#fc0328",
   },
   dateTimeContainer: {
     flexDirection: "row",
-    justifyContent: "space-evenly"
+    justifyContent: "space-around",
+    borderWidth: 1,
+    width: RFPercentage(30),
+    marginTop: "5%",
   },
   greyPfpCover: {
     width: RFPercentage(18),
