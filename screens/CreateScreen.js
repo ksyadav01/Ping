@@ -66,6 +66,7 @@ const CreateScreen = ({ props, navigation }) => {
   const [d, setBioHoverColor] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
+  const [location, setLocation] = useState(null);
 
   let userData = new Map();
   let [fontsLoaded] = useFonts({
@@ -438,7 +439,7 @@ const CreateScreen = ({ props, navigation }) => {
                   </TextCustom>
                 </LinearGradient>
               </TouchableOpacity>
-              <SelectLocationModal show={showLocationModal} setShow={setShowLocationModal}></SelectLocationModal>
+              <SelectLocationModal show={showLocationModal} setShow={setShowLocationModal} setLocation={setLocation}/>
               {/* <View style={styles.anonymousHolder}>
                 <TextCustom style={styles.anonText}>Anonymous user</TextCustom>
 

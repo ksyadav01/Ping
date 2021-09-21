@@ -35,6 +35,7 @@ export default class SelectLocationModal extends React.Component {
       errorMsh: null,
       lat: null,
       long: null,
+      marker: null
     };
   }
 
@@ -70,35 +71,39 @@ export default class SelectLocationModal extends React.Component {
             <View style={styles.tagModal}>
               <View style={styles.tagModalCenter}>
                 <TextSansBold style={{ fontSize: RFPercentage(2.3) }}>
-                  What are tags?
+                  Select the event location!
                 </TextSansBold>
                 <TouchableOpacity style={styles.iconButton} onPress={() => this.props.setShow(false)} >
                   <Ionicons name="close-circle-outline" size={40} color="black" />
                 </TouchableOpacity>
-              <View style={styles.container}>
-                <MapView style={styles.map} provider="google" userInterfaceStyle="dark" initialRegion={{
-                    latitude: this.state.lat,
-                    longitude: this.state.long,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                  }}>
-                  <Marker
-                    coordinate={{ latitude: this.state.lat, longitude: this.state.long }}
-                    pinColor="black" draggable={true}
-                    onDragStart={(e) => {
-                      console.log(e.nativeEvent.coordinate);
-                    }}
-                    onDragEnd={(e) => {
-                      this.setState({lat: e.nativeEvent.coordinate.latitude, long: e.nativeEvent.coordinate.longitude});
-                    }}
-                  >
-                    <Callout>
-                      <Text>Current Location</Text>
-                    </Callout>
-                  </Marker>
-                </MapView>
               </View>
-            </View>
+
+                <View style={styles.container}>
+                  <MapView style={styles.map} provider="google" userInterfaceStyle="dark" initialRegion={{
+                      latitude: this.state.lat,
+                      longitude: this.state.long,
+                      latitudeDelta: 0.0222,
+                      longitudeDelta: 0.0221,
+                    }}
+                    onPress={(e) => this.setState({ lat: e.nativeEvent.coordinate.latitude, long: e.nativeEvent.coordinate.longitude })}>
+                     
+                    <MapView.Marker coordinate={{ latitude: this.state.lat, longitude: this.state.long }}
+                      pinColor="black" draggable={true}
+                      onDragStart={(e) => {
+                        console.log(e.nativeEvent.coordinate);
+                      }}
+                      onDragEnd={(e) => {
+                        this.setState({lat: e.nativeEvent.coordinate.latitude, long: e.nativeEvent.coordinate.longitude});
+                      }}>
+                      <Callout>
+                        <Text>Current Location</Text>
+                      </Callout></MapView.Marker>
+                    {/* <Marker
+                      
+                    </Marker> */}
+                  </MapView>
+
+              </View>
             
             </View>
           </View>
@@ -120,9 +125,10 @@ const styles = StyleSheet.create({
   tagModal: {
     backgroundColor: "#ffffff",
     margin: RFPercentage(1),
-    marginTop: RFPercentage(30),
+    marginTop: RFPercentage(15),
     padding: 40,
     borderRadius: 10,
+    justifyContent: "space-between"
   },
   tagModalBackground: {
     backgroundColor: "#000000aa",
@@ -131,13 +137,16 @@ const styles = StyleSheet.create({
   tagModalCenter: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
   },
   container: {
-      flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+      borderWidth: 7,
+      borderRadius: RFPercentage(.75),
+      borderColor: "#F20D54",
+      height: RFPercentage(51),
+      zIndex: 1
     },
     map: {
       width: RFPercentage(40),//Dimensions.get('window').width,
