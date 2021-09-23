@@ -141,7 +141,7 @@ const DrawerContent = ({props, navigation}) => {
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Ionicons 
-                                name="home-outline" 
+                                name="person-circle-outline" 
                                 color={color}
                                 size={size}
                                 />
@@ -171,7 +171,7 @@ const DrawerContent = ({props, navigation}) => {
                             label="Settings"
                             onPress={() => {navigation.navigate('Settings')}}
                         />
-                        <DrawerItem 
+                        {/* <DrawerItem 
                             icon={({color, size}) => (
                                 <Ionicons 
                                 name="home-outline" 
@@ -181,7 +181,7 @@ const DrawerContent = ({props, navigation}) => {
                             )}
                             label="Support"
                             onPress={() => {navigation.navigate('Map')}}
-                        />
+                        /> */}
                     </Drawer.Section>
                     <Drawer.Section title="Preferences">
                         <TouchableRipple onPress={() => {toggleTheme()}}>
@@ -195,6 +195,13 @@ const DrawerContent = ({props, navigation}) => {
                     </Drawer.Section>
                 </View>
             </DrawerContentScrollView>
+            <Drawer.Section style={styles.bottomDrawerSection}>
+                <DrawerItem 
+                    
+                    label="Terms of Service"
+                    onPress={() => {navigation.navigate('SignOut')}}
+                />
+            </Drawer.Section>
             <Drawer.Section style={styles.bottomDrawerSection}>
                 <DrawerItem 
                     icon={({color, size}) => (
